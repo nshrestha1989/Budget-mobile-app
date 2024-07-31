@@ -1,0 +1,26 @@
+{
+  "cwd": "D:\\MY GOALS\\Framework7Projects\\Charts",
+  "type": [
+    "web",
+    "capacitor"
+  ],
+  "name": "Chart",
+  "pkg": "www.chartniranjan.com",
+  "framework": "react",
+  "template": "tabs",
+  "cssPreProcessor": false,
+  "bundler": "vite",
+  "capacitor": {
+    "platforms": [
+      "ios",
+      "android"
+    ]
+  },
+  "theming": {
+    "customColor": true,
+    "color": "#fd4f02",
+    "darkMode": false,
+    "iconFonts": true
+  },
+  "customBuild": false
+}
