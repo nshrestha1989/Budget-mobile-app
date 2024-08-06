@@ -1,1 +1,101 @@
-/* Your app custom styles here */
+/* tailwind */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --f7-color-orange: #f36f32;
+  --f7-color-red: #c62828;
+  --f7-color-lightblue: #009fc1;
+  --f7-color-teal: #00b6ad;
+  --f7-color-pink: #c71d65;
+  --muted: #757575;
+  --muted-foreground: #fff;
+  --f7-checkbox-active-color: var(--f7-color-teal);
+  --f7-md-outline: #d2d2d2;
+  --f7-searchbar-backdrop-bg-color: none;
+}
+
+*,
+::before,
+::after {
+  border-color: var(--f7-list-outline-border-color);
+}
+/*Color Overrides*/
+.ios,
+.ios .dark {
+  --f7-toggle-height: 26px;
+  --f7-toggle-width: 46px;
+  --f7-block-title-text-color: var(--f7-theme-color);
+  --f7-block-title-medium-text-color: var(--f7-theme-color);
+  --f7-block-title-large-text-color: var(--f7-theme-color);
+  --f7-block-title-large-font-size: 25px;
+}
+.md,
+.md .dark {
+  --f7-theme-color: var(--f7-ios-primary);
+  --f7-theme-color-rgb: var(--f7-ios-primary-rgb);
+  --f7-theme-color-shade: var(--f7-ios-primary-shade);
+  --f7-theme-color-tint: var(--f7-ios-primary-tint);
+  --f7-block-title-large-font-size: 25px;
+}
+.bg-color-orange {
+  --f7-theme-color-bg-color: var(--f7-color-orange);
+}
+.color-orange {
+  --f7-md-primary: var(--f7-color-orange);
+}
+.bg-color-red {
+  --f7-theme-color-bg-color: var(--f7-color-red);
+}
+.color-red {
+  --f7-md-primary: var(--f7-color-red);
+}
+.bg-color-teal {
+  --f7-theme-color-bg-color: var(--f7-color-teal);
+}
+.color-teal {
+  --f7-md-primary: var(--f7-color-teal);
+}
+.bg-color-pink {
+  --f7-theme-color-bg-color: var(--f7-color-pink);
+}
+.color-pink {
+  --f7-md-primary: var(--f7-color-pink);
+}
+
+/*Generic component overrides*/
+.md .list-item-no-border {
+  --f7-input-border-color: none;
+  --f7-input-invalid-border-color: none;
+}
+.md .list-strong-md .item-input .item-content,
+.md .list-strong-md .item-input.item-content {
+  --f7-input-item-bg-color: none;
+  padding-left: 0;
+}
+.button-large {
+  min-height: 65px;
+}
+
+/* display radio as checkbox styling for ios */
+.ios label.item-radio-icon-start > .icon-radio {
+  border: var(--f7-checkbox-border-width) solid
+    var(--f7-checkbox-inactive-color);
+}
+.ios label.item-radio input[type="radio"]:checked ~ .icon-radio {
+  border-color: var(--f7-checkbox-active-color, var(--f7-theme-color));
+  background-color: var(--f7-checkbox-active-color, var(--f7-theme-color));
+}
+.ios .icon-radio:after {
+  color: var(--f7-checkbox-icon-color);
+}
+
+/*indeterminate toggle*/
+.ios .toggle.indeterminate .toggle-icon:after {
+  transform: translateX(calc((var(--f7-toggle-width) / 4 - 2px))) scale(0.7);
+}
+.md .toggle.indeterminate .toggle-icon:after {
+  transform: translateX(calc((var(--f7-toggle-width) / 4 - 4px))) scale(0.6);
+  opacity: 0.6;
+}

@@ -1,13 +1,17 @@
 {
-  "appId": "www.chartniranjan.com",
-  "appName": "Chart",
+  "appId": "io.framework7.myapp",
+  "appName": "My App",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "www",
   "plugins": {
+    "CapacitorHttp": {
+      "enabled": true
+    },
     "SplashScreen": {
       "launchShowDuration": 0
     }
   },
   "cordova": {}
 }
+

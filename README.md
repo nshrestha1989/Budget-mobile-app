@@ -1,4 +1,4 @@
-# Chart
+# My App
 
 ## Framework7 CLI Options
 
@@ -6,30 +6,29 @@ Framework7 app created with following options:
 
 ```
 {
-  "cwd": "D:\\MY GOALS\\Framework7Projects\\Charts",
+  "cwd": "C:\\Users\\NiranjanShrestha\\test17",
   "type": [
-    "web",
     "capacitor"
   ],
-  "name": "Chart",
-  "pkg": "Chart-",
+  "name": "My App",
   "framework": "react",
-  "template": "tabs",
-  "cssPreProcessor": false,
+  "template": "single-view",
   "bundler": "vite",
+  "cssPreProcessor": false,
+  "theming": {
+    "customColor": true,
+    "color": "#367dd2",
+    "darkMode": false,
+    "iconFonts": true
+  },
+  "customBuild": false,
+  "pkg": "io.framework7.myapp",
   "capacitor": {
     "platforms": [
       "ios",
       "android"
     ]
-  },
-  "theming": {
-    "customColor": true,
-    "color": "#fd4f02",
-    "darkMode": false,
-    "iconFonts": true
-  },
-  "customBuild": false
+  }
 }
 ```
 
