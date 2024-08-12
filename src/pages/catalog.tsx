@@ -1,20 +1,39 @@
 import { Page, Navbar, List, ListItem, Block, Button, Input } from 'framework7-react';
 import { useState, ChangeEvent } from 'react';
-import { useSaveFamily,useFamilies } from '../lib/API/family-api'; // Use the combined file
+import { useFamilyStore } from '@/stores/familyStore';
+import { FamilyMember } from '@/types/family';
+import { useFamilies } from '@/lib/API/familly/fetchFamilies';
+import { useSaveFamily } from '@/lib/API/familly/useSaveFamily';
+import { useDeleteFamily } from '@/lib/API/familly/useDeleteFamily';
 
 
 const Family = () => {
   const [newMember, setNewMember] = useState<string>('');
-
+  const { members, addMember, removeMember } = useFamilyStore(); // Assuming you have a removeMember action
   const { data: families = [], refetch, isError } = useFamilies();
-
-  const mutation = useSaveFamily({
+ console.log(families)
+  const saveMutation = useSaveFamily({
     mutationConfig: {
-      onSuccess: () => {
+      onSuccess: (newFamily: FamilyMember) => {
+        addMember(newFamily);
         setNewMember('');
+        refetch();
       },
       onError: (error: Error) => {
         console.error('Error creating family:', error);
+        // Handle error appropriately (e.g., show notification)
+      },
+    },
+  });
+
+  const deleteMutation = useDeleteFamily({
+    mutationConfig: {
+      onSuccess: (deletedId: number) => {
+        removeMember(deletedId); 
+        refetch(); 
+      },
+      onError: (error: Error) => {
+        console.error('Error deleting family:', error);
         // Handle error appropriately (e.g., show notification)
       },
     },
@@ -24,10 +43,14 @@ const Family = () => {
     setNewMember(e.target.value);
   };
 
-  const handleButtonClick = () => {
+  const handleAddButtonClick = () => {
     if (newMember.trim() !== '') {
-      mutation.mutate(newMember);
+      saveMutation.mutate(newMember); // Pass the string directly
     }
+  };
+
+  const handleDeleteButtonClick = (id: number) => {
+    deleteMutation.mutate(id); // Pass the ID to the delete function
   };
 
   return (
@@ -45,16 +68,28 @@ const Family = () => {
         <Button
           fill
           className="m-1"
-          onClick={handleButtonClick}
-          disabled={mutation.isPending}
+          onClick={handleAddButtonClick}
+          disabled={saveMutation.isPending}
         >
-          {mutation.isPending ? 'Adding...' : 'Add Member'}
+          {saveMutation.isPending ? 'Adding...' : 'Add Member'}
         </Button>
       </Block>
       <List strong dividersIos outlineIos insetMd>
-        {families.length >0 && families.map((member, index) => (
-          <ListItem key={index} title={member.familyName} />
-        ))}
+        {families.length > 0 ? (
+          families.map((member) => (
+            <ListItem key={member.familyId} title={member.familyName}>
+              <Button
+                small
+                color="red"
+                onClick={() => handleDeleteButtonClick(member.familyId)}
+              >
+                Delete
+              </Button>
+            </ListItem>
+          ))
+        ) : (
+          <ListItem title="No members found" />
+        )}
       </List>
     </Page>
   );
