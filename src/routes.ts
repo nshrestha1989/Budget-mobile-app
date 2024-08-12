@@ -3,7 +3,7 @@ import HomePage from './pages/home.jsx';
 import AboutPage from './pages/about.jsx';
 import FormPage from './pages/form.jsx';
 import Dashboard from './pages/dashboard.jsx'
-import CatalogPage from './pages/catalog.jsx';
+import Family from './pages/catalog.jsx';
 import ViewAccount from './pages/viewAccount.jsx';
 import AddAccount from './pages/addAccount.jsx';
 
@@ -29,7 +29,7 @@ var routes = [
   },
   {
     path: '/catalog/',
-    component: CatalogPage,
+    component: Family,
   },
   {
     path: '/product/:id/',

@@ -2,7 +2,7 @@ import { ApiError, api } from "./api-client";
 import { useMutation } from "@tanstack/react-query";
 import { useAuthStore } from "@/stores/authStore";
 import { useEffect } from "react";
-import { useRouter } from "@/hooks/useRouter";
+import { useRouter } from "../hooks/useRouter";
 import {
   CreateNewPasswordInput,
   CreateNewPasswordResponse,
@@ -14,7 +14,7 @@ import {
   ValidateSessionResponse,
   VerifyCodeInput,
   VerifyCodeResponse,
-} from "@/types/auth";
+} from "../types/auth";
 
 const loginWithEmailPassword = async (
   input: LoginInput,

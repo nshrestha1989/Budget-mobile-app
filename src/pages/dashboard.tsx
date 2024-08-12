@@ -7,65 +7,72 @@ import {
   Button,
   Block,
   f7,
-} from "framework7-react";
-
-import LineChart from "../components/ui/LineChart";
+  Input,
+} from 'framework7-react';
+import { useState } from 'react';
+import LineChart from '../components/ui/LineChart';
 
 const DashBoard = () => {
+  const [accounts, setAccounts] = useState<string[]>([]);
+
   const addAccount = () => {
-    console.log("Add Account button clicked");
+    // Open a prompt to enter the new account name
+    f7.dialog.prompt('Enter account name:', (accountName) => {
+      if (accountName && !accounts.includes(accountName)) {
+        setAccounts([...accounts, accountName]);
+      } else if (accounts.includes(accountName)) {
+        f7.dialog.alert('Account already exists.');
+      }
+    });
   };
 
-  const handleButtonClick = (id: any) => {
+  const handleButtonClick = (id: number) => {
     f7.views.main.router.navigate(`/product/${id}/`);
   };
 
   return (
-    <Page name="Dashboard" >
-      <Navbar title="Dashboard"></Navbar>
-      <BlockTitle className="font-bold">Accounts</BlockTitle>
+    <Page name="Dashboard">
+      <Navbar title="Dashboard" />
       <Block strongIos outlineIos className="grid grid-cols-2">
-        <Button
-          key={1}
-          fill
-          className="m-1"
-          onClick={() => handleButtonClick(1)}
-        >
-          Cash
-        </Button>
-        <Button
-          key={2}
-          fill
-          className="m-1"
-          onClick={() => handleButtonClick(1)}
-        >
-          Bank
-        </Button>
+        <BlockTitle className="font-bold">List of Accounts</BlockTitle>
+        <Icon material="settings" className="left-0" />
+      </Block>
+
+      <Block strongIos outlineIos className="grid grid-cols-2">
+        {accounts.map((account, index) => (
+          <Button
+            key={index}
+            fill
+            className="m-1"
+            onClick={() => handleButtonClick(index)}
+          >
+            {account}
+          </Button>
+        ))}
         <Button className="m-2" outline onClick={addAccount}>
-          <Icon material="add_circle"></Icon>
+          <Icon material="add_circle" />
           Add Account
         </Button>
+        <div></div>
+        <div></div>
+        <div className="right-0">
+          <Icon material="list" />
+        </div>
       </Block>
-      <BlockTitle className="m-1 ml-4" >Balance Trend</BlockTitle>
-      <BlockTitle className="m-1 ml-4 mb-2" >$8561</BlockTitle>
+      <BlockTitle className="m-1 ml-4">Balance Trend</BlockTitle>
+      <BlockTitle className="m-1 ml-4 mb-2">$8561</BlockTitle>
       <Block strongIos outlineIos className="grid">
         <LineChart />
       </Block>
 
       <BlockTitle>Notes</BlockTitle>
-      
       <Block strongIos outlineIos className="">
-      <Button  className="absolute right-0 bottom-1">
-          <Icon material="add_circle"></Icon>
+        <Button className="absolute right-0 bottom-1">
+          <Icon material="add_circle" />
         </Button>
       </Block>
       <Block strongIos outlineIos className="grid">
-        <p>
-          Here comes paragraph within content block. Donec et nulla auctor massa
-          pharetra adipiscing ut sit amet sem. Suspendisse molestie velit vitae
-          mattis tincidunt. Ut sit amet quam mollis, vulputate turpis vel,
-          sagittis felis.
-        </p>
+        <Input type="textarea" validate />
       </Block>
     </Page>
   );

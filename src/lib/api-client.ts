@@ -49,7 +49,7 @@ function authRequestInterceptor(config: InternalAxiosRequestConfig) {
 }
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL,
+  baseURL:"https://localhost:7031",
   headers: {
     "Content-type": "application/json",
   },
