@@ -1,32 +1,28 @@
 import { queryOptions, useQuery } from '@tanstack/react-query';
-import { QueryConfig } from '@/lib/react-query'; // Ensure this matches your setup
-
+import { QueryConfig } from '@/lib/react-query';
 import { FamilyMember } from '@/types/family';
 import { api, ApiError } from '@/lib/api-client';
 
 export const fetchFamilies = async (): Promise<FamilyMember[]> => {
-    return  await api.get('/api/Families');
-  };
+  const response = await api.get('/api/Families');
+  return response;
+};
 
 export const getFamiliesQueryOptions = () => {
-    return queryOptions<FamilyMember[] | undefined, ApiError>({
-      queryKey: ["families"],
-      queryFn: () => fetchFamilies(),
-      networkMode: "offlineFirst",
-    });
-  };
+  return queryOptions<FamilyMember[] | undefined, ApiError>({
+    queryKey: ['families'],
+    queryFn:()=> fetchFamilies(),
+    networkMode: "offlineFirst"
+  });
+};
 
 export type UseFamiliesOptions = {
-    queryConfig?: QueryConfig<typeof getFamiliesQueryOptions>;
-  };
+  queryConfig?: QueryConfig<typeof getFamiliesQueryOptions>;
+};
 
-export const useFamilies = ({ queryConfig }: UseFamiliesOptions= {}) => {
-    return useQuery({
-      ...getFamiliesQueryOptions(),
-      ...queryConfig,
-    });
-  };
-
-
-
-  
+export const useFamilies = ({ queryConfig }: UseFamiliesOptions = {}) => {
+  return useQuery({
+    ...getFamiliesQueryOptions(),
+    ...queryConfig,
+  });
+};

@@ -8,9 +8,9 @@ import { AppProps } from "framework7-react/components/app";
 import MenuPanel from "./menu-panels";
 
 const AppContainer = () => {
-  // Framework7 Parameters
+
   const f7params: AppProps = {
-    name: "Geat2GoMobile", // App name
+    name: "FamilyBudget", 
     theme: "auto", // Automatic theme detection
     colors: {
       primary: "#1887be",
