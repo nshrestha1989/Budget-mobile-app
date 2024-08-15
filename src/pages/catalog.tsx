@@ -4,8 +4,9 @@ import { useFamilyStore } from '@/stores/familyStore';
 import { useFamilies } from '@/lib/API/familly/fetchFamilies';
 import { useSaveFamily } from '@/lib/API/familly/useSaveFamily';
 import { useDeleteFamily } from '@/lib/API/familly/useDeleteFamily';
-import { useNetworkSync } from '@/lib/useNetworkSync';
+
 import { FamilyMember } from '@/types/family';
+import { processOfflineQueue } from '@/lib/onlineQueueProcessor';
 
 
 const Family = () => {
@@ -13,7 +14,7 @@ const Family = () => {
   const { addMember, removeMember } = useFamilyStore();
   const { data: families = [], refetch, isError } = useFamilies();
 
-  useNetworkSync();
+
 
   const saveMutation = useSaveFamily({
     mutationConfig: {
@@ -53,7 +54,7 @@ const Family = () => {
   const handleDeleteButtonClick = (id: number) => {
     deleteMutation.mutate(id);
   };
-
+  processOfflineQueue();
   return (
     <Page name="Family">
       <Navbar title="Family" />
