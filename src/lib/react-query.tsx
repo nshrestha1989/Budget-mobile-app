@@ -6,7 +6,7 @@ import {
 import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client";
 import { createAsyncStoragePersister } from "@tanstack/query-async-storage-persister";
 import localforage from "localforage";
-
+import { compress, decompress } from 'lz-string'
 export const queryConfig = {
   queries: {
     throwOnError: false,
@@ -22,12 +22,8 @@ export const queryClient = new QueryClient({
 
 const asyncLocalForageStoragePersister = createAsyncStoragePersister({
   storage: localforage,
-  deserialize(cachedString) {
-    return cachedString as any;
-  },
-  serialize(client) {
-    return client as any;
-  },
+  serialize: (data) => JSON.stringify(data),
+    deserialize: (data) => JSON.parse(data),
 });
 
 export const QueryClientProvider = ({

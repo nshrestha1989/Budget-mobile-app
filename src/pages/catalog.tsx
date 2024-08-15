@@ -4,27 +4,22 @@ import { useFamilyStore } from '@/stores/familyStore';
 import { useFamilies } from '@/lib/API/familly/fetchFamilies';
 import { useSaveFamily } from '@/lib/API/familly/useSaveFamily';
 import { useDeleteFamily } from '@/lib/API/familly/useDeleteFamily';
-
 import { FamilyMember } from '@/types/family';
-import { processOfflineQueue } from '@/lib/onlineQueueProcessor';
-
 
 const Family = () => {
   const [newMember, setNewMember] = useState<string>('');
-  const { addMember, removeMember } = useFamilyStore();
   const { data: families = [], refetch, isError } = useFamilies();
-
-
-
+ 
   const saveMutation = useSaveFamily({
     mutationConfig: {
       onSuccess: (newFamily: FamilyMember) => {
-        addMember(newFamily);
+ 
         setNewMember('');
         refetch();
       },
       onError: (error: Error) => {
         console.error('Error creating family:', error);
+        setNewMember('');
       },
     },
   });
@@ -32,8 +27,7 @@ const Family = () => {
   const deleteMutation = useDeleteFamily({
     mutationConfig: {
       onSuccess: (deletedId: number) => {
-        removeMember(deletedId);
-        refetch();
+         refetch();
       },
       onError: (error: Error) => {
         console.error('Error deleting family:', error);
@@ -44,17 +38,19 @@ const Family = () => {
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setNewMember(e.target.value);
   };
-
+ 
   const handleAddButtonClick = () => {
-    if (newMember.trim() !== '') {
-      saveMutation.mutate(newMember);
-    }
-  };
+    saveMutation.mutate(newMember);
+    };
 
   const handleDeleteButtonClick = (id: number) => {
     deleteMutation.mutate(id);
+    if(!navigator.onLine){
+      setNewMember('');
+    }
   };
-  processOfflineQueue();
+
+
   return (
     <Page name="Family">
       <Navbar title="Family" />
@@ -71,9 +67,9 @@ const Family = () => {
           fill
           className="m-1"
           onClick={handleAddButtonClick}
-          disabled={saveMutation.isPending}
+          disabled={saveMutation.isPending && navigator.onLine}
         >
-          {saveMutation.isPending ? 'Adding...' : 'Add Member'}
+          {saveMutation.isPending && navigator.onLine? 'Adding...' : 'Add Member'}
         </Button>
       </Block>
       <List strong dividersIos outlineIos insetMd>
