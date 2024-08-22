@@ -30,7 +30,17 @@ export default async () => {
       },
     },
     server: {
-      host: true,
+      proxy: {
+        '/api': {
+          target: 'https://au-api.basiq.io',
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/api/, ''),
+          secure: false,
+          headers: {
+            'basiq-version': '2.0',
+          },
+        },
+      },
     },
 
   };

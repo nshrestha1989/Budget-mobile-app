@@ -20,6 +20,8 @@
     "last 5 Firefox versions"
   ],
   "dependencies": {
+    "@babel/runtime": "^7.25.0",
+    "@basiq/basiq-connect-control": "^1.0.72",
     "@capacitor/android": "^6.0.0",
     "@capacitor/app": "^6.0.0",
     "@capacitor/browser": "^6.0.0",
@@ -46,6 +48,7 @@
     "framework7": "^8.3.3",
     "framework7-icons": "^5.0.5",
     "framework7-react": "^8.3.3",
+    "http-proxy-middleware": "^3.0.0",
     "input-otp": "^1.2.4",
     "localforage": "^1.10.0",
     "material-icons": "^1.13.12",
@@ -65,6 +68,7 @@
     "zustand": "^4.5.2"
   },
   "devDependencies": {
+    "@babel/plugin-transform-runtime": "^7.24.7",
     "@capacitor/cli": "^6.0.0",
     "@tanstack/eslint-plugin-query": "^5.35.6",
     "@types/flexsearch": "^0.7.6",

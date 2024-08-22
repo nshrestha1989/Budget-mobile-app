@@ -6,6 +6,7 @@ import routes from "../routes";
 import { QueryClientProvider } from "../lib/react-query";
 import { AppProps } from "framework7-react/components/app";
 import MenuPanel from "./menu-panels";
+import 'regenerator-runtime/runtime';
 
 const AppContainer = () => {
 

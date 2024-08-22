@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import {
   Page,
   Navbar,
@@ -8,26 +9,35 @@ import {
   Block,
   f7,
   Input,
-} from 'framework7-react';
-import { useState } from 'react';
-import LineChart from '../components/ui/LineChart';
+} from "framework7-react";
+import LineChart from "../components/ui/LineChart";
+import { BasiqConnectModal } from "@/components/ui/BasiqConnectModel";
+
 
 const DashBoard = () => {
   const [accounts, setAccounts] = useState<string[]>([]);
+  const [popupOpened, setPopupOpened] = useState(false);
 
   const addAccount = () => {
-    // Open a prompt to enter the new account name
-    f7.dialog.prompt('Enter account name:', (accountName) => {
+    f7.dialog.prompt("Enter account name:", (accountName) => {
       if (accountName && !accounts.includes(accountName)) {
         setAccounts([...accounts, accountName]);
       } else if (accounts.includes(accountName)) {
-        f7.dialog.alert('Account already exists.');
+        f7.dialog.alert("Account already exists.");
       }
     });
   };
 
   const handleButtonClick = (id: number) => {
     f7.views.main.router.navigate(`/product/${id}/`);
+  };
+
+  const openPopup = () => {
+    setPopupOpened(true);
+  };
+
+  const closePopup = () => {
+    setPopupOpened(false);
   };
 
   return (
@@ -59,6 +69,7 @@ const DashBoard = () => {
           <Icon material="list" />
         </div>
       </Block>
+
       <BlockTitle className="m-1 ml-4">Balance Trend</BlockTitle>
       <BlockTitle className="m-1 ml-4 mb-2">$8561</BlockTitle>
       <Block strongIos outlineIos className="grid">
@@ -73,6 +84,15 @@ const DashBoard = () => {
       </Block>
       <Block strongIos outlineIos className="grid">
         <Input type="textarea" validate />
+      </Block>
+
+      <Block strongIos outlineIos className="grid">
+        <div>
+          <Button fill onClick={openPopup}>
+          Connect to Bank
+          </Button>
+        </div>
+        <BasiqConnectModal isOpen={popupOpened} onClose={closePopup} />
       </Block>
     </Page>
   );

@@ -22,7 +22,7 @@ Framework7 app created with following options:
     "iconFonts": true
   },
   "customBuild": false,
-  "pkg": "io.framework7.myapp",
+  "pkg": "io.niranjankajol.myapp",
   "capacitor": {
     "platforms": [
       "ios",
