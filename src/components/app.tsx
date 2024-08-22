@@ -32,7 +32,7 @@ const AppContainer = () => {
           {/* Tabbar for switching views-tabs */}
           <Toolbar tabbar icons bottom>
             <Link tabLink="#view-home" tabLinkActive iconIos="f7:house_fill" iconMd="material:dashboard" text="Dashboard" />
-            <Link tabLink="#view-catalog" iconIos="f7:square_list_fill" iconMd="material:diversity_3" text="Family" />
+            <Link tabLink="#view-family" iconIos="f7:square_list_fill" iconMd="material:diversity_3" text="Family" />
             <Link tabLink="#view-settings" iconIos="f7:gear" iconMd="material:settings" text="Settings" />
           </Toolbar>
 
@@ -40,7 +40,7 @@ const AppContainer = () => {
           <View id="view-home" main tab tabActive url="/" />
 
           {/* Catalog View */}
-          <View id="view-catalog" name="catalog" tab url="/catalog/" />
+          <View id="view-family" name="family" tab url="/family/" />
 
           {/* Settings View */}
           <View id="view-settings" name="settings" tab url="/settings/" />

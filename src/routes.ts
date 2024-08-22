@@ -1,9 +1,8 @@
 
-import HomePage from './pages/home.jsx';
 import AboutPage from './pages/about.jsx';
 import FormPage from './pages/form.jsx';
 import Dashboard from './pages/dashboard.jsx'
-import Family from './pages/catalog.jsx';
+import Family from './pages/family.js';
 import ViewAccount from './pages/viewAccount.jsx';
 import AddAccount from './pages/addAccount.jsx';
 
@@ -28,7 +27,7 @@ var routes = [
     component: Dashboard,
   },
   {
-    path: '/catalog/',
+    path: '/family/',
     component: Family,
   },
   {
