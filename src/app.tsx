@@ -2,11 +2,12 @@ import React, { useState, useEffect } from "react";
 
 import { f7ready, App, View, Views, Toolbar, Link } from "framework7-react";
 
-import routes from "../routes";
-import { QueryClientProvider } from "../lib/react-query";
+
+import { QueryClientProvider } from "../src/lib/react-query";
 import { AppProps } from "framework7-react/components/app";
-import MenuPanel from "./menu-panels";
+import MenuPanel from "../src/components/menu-panels";
 import 'regenerator-runtime/runtime';
+import routes from "./routes";
 
 const AppContainer = () => {
 

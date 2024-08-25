@@ -1,4 +1,4 @@
-import { LoginResponse } from "../types/auth";
+import { LoginResponse } from "../../../types/auth";
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 
@@ -12,11 +12,10 @@ type AuthState = {
   token: string;
   createNewPasswordErrorMessage?: string | null;
 };
-
 type AuthActions = {
   setIsAuthenticated: (isAuthenticated: boolean) => void;
-  setLoginError: (error?: string) => void;
-  setUserData: (user: LoginResponse) => void;
+  setLoginError: (LoginError: string) => void;
+  setUserData: (user: LoginResponse | null) => void;
   setForgotPasswordMessage: (message?: string) => void;
   setForgotPasswordErrorMessage: (message?: string) => void;
   setVerifyCodeErrorMessage: (error?: string) => void;

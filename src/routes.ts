@@ -1,18 +1,22 @@
 
-import AboutPage from './pages/about.jsx';
-import FormPage from './pages/form.jsx';
-import Dashboard from './pages/dashboard.jsx'
-import Family from './pages/family.js';
-import ViewAccount from './pages/viewAccount.jsx';
-import AddAccount from './pages/addAccount.jsx';
-
-import DynamicRoutePage from './pages/dynamic-route.jsx';
-import NotFoundPage from './pages/404.js';
+import AboutPage from './pages/about';
+import FormPage from './pages/form';
+import Dashboard from './pages/dashboard'
+import Family from './pages/family';
+import ViewAccount from './pages/viewAccount';
+import AddAccount from './pages/addAccount';
+import AuthLandingPage from "@/pages/auth/AuthForm";
+import DynamicRoutePage from './pages/dynamic-route';
+import LoginPage from "@/pages/auth/login";
+import SignupPage from "@/pages/auth/signup";
+import NotFoundPage from './pages/404';
+import HomePage from './pages/home.js';
+import SplashPage from './pages/splash';
 
 var routes = [
   {
     path: '/',
-    component: Dashboard,
+    component: SplashPage,
   },
   {
     path: '/about/',
@@ -34,6 +38,19 @@ var routes = [
     path: '/product/:id/',
     component: ViewAccount,
   },
+  {
+    path: "/auth/",
+    component: AuthLandingPage,
+  },
+
+{
+  path: "/auth/login/",
+  component: LoginPage,
+},
+{
+  path: "/auth/signup/",
+  component: SignupPage,
+},
   {
     path: '/add-account/',
     component: AddAccount,

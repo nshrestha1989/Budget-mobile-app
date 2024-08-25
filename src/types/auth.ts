@@ -10,27 +10,15 @@ export type AuthPageDataResponse = {
   terms_and_conditions: string;
 };
 
-export const PrescriberRoles = [
-  "RAS",
-  "ACAT / ACAS",
-  "Occupational Therapist",
-  "Physiotherapist",
-  "Speech Pathologist",
-  "Optometrist",
-  "Orthoptist",
-] as const;
-
 export const signupInputSchema = z.object({
   firstname: z.string().min(1, "Firstname is required"),
-  lastname: z.string().min(1, "Lastname is required"),
+  lastName: z.string().min(1, "Lastname is required"),
+  password: z.string().min(1, "Password is required"),
+  address1: z.string().min(1, "Address is required"),
   state: z.string().min(1, "State is required"),
-  ahpra_number: z.string().optional(),
+  dateOfBirth: z.string().min(1, "Date of Birth is required"),
   email: z.string().email("Invalid email").min(1, "Required"),
-  mobile_number: z.string().min(1, "Mobile number is required"),
-  land_number: z.string().min(1, "Required"),
-  organisation_name: z.string().min(1, "Organisation name is required"),
-  prescriber_role: z.enum(PrescriberRoles),
-  privacy_policy: z.boolean().default(false),
+  mobileNumber: z.string().min(1, "Mobile number is required"),
   terms_and_conditions: z.boolean().default(false),
 });
 export type SignupInput = z.infer<typeof signupInputSchema>;
@@ -63,15 +51,36 @@ export type ForgotPasswordInput =z.infer<typeof forgotPasswordInputSchema>;
 export type VerifyCodeInput = z.infer<typeof verifyCodeInputSchema>;
 export type CreateNewPasswordInput = z.infer<typeof createNewPasswordInputSchema>;
 export type LoginResponse = {
-  menu: Menu[];
-  user: string;
-  token: string;
-  refresh_token: string;
-  timezone: string;
-  status: ApiResponseStatus | "ErrUser";
-  message: string;
-  profilepic: string;
-  account_type: string;
+  $id: string
+  $createdAt: string
+  $updatedAt: string
+  session:string
+  userId: string
+  expire: string
+  provider: string
+  providerUid: string
+  providerAccessToken: string
+  providerAccessTokenExpiry: string
+  providerRefreshToken: string
+  ip: string
+  osCode: string
+  osName: string
+  osVersion: string
+  clientType: string
+  clientCode: string
+  clientName: string
+  clientVersion: string
+  clientEngine: string
+  clientEngineVersion: string
+  deviceName: string
+  deviceBrand: string
+  deviceModel: string
+  countryCode: string
+  countryName: string
+  current: boolean
+  factors: string[]
+  secret: string
+  mfaUpdatedAt: string
 };
 
 export type RefreshSessionResponse = {

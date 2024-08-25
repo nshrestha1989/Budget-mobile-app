@@ -10,14 +10,13 @@ import {
   f7,
   Input,
 } from "framework7-react";
-import LineChart from "../components/ui/LineChart";
-import { BasiqConnectModal } from "@/components/ui/BasiqConnectModel";
+import LineChart from "../components/Charts/LineChart";
+import { useAuth } from "@/features/auth/api/login";
 
 
 const DashBoard = () => {
   const [accounts, setAccounts] = useState<string[]>([]);
-  const [popupOpened, setPopupOpened] = useState(false);
-
+  const { logout } = useAuth();
   const addAccount = () => {
     f7.dialog.prompt("Enter account name:", (accountName) => {
       if (accountName && !accounts.includes(accountName)) {
@@ -32,13 +31,9 @@ const DashBoard = () => {
     f7.views.main.router.navigate(`/product/${id}/`);
   };
 
-  const openPopup = () => {
-    setPopupOpened(true);
-  };
-
-  const closePopup = () => {
-    setPopupOpened(false);
-  };
+  const handleSignOut = async ()=>{
+    const valid = await logout.mutateAsync();
+  }
 
   return (
     <Page name="Dashboard">
@@ -88,11 +83,11 @@ const DashBoard = () => {
 
       <Block strongIos outlineIos className="grid">
         <div>
-          <Button fill onClick={openPopup}>
-          Connect to Bank
+          <Button fill onClick={handleSignOut}>
+          SIGN OUT
           </Button>
         </div>
-        <BasiqConnectModal isOpen={popupOpened} onClose={closePopup} />
+        {/* <BasiqConnectModal isOpen={popupOpened} onClose={closePopup} /> */}
       </Block>
     </Page>
   );

@@ -8,7 +8,7 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-// https://github.com/colinhacks/zod/issues/479#issuecomment-2067278879
+
 export const zodAlwaysRefine = <T extends z.ZodTypeAny>(zodType: T) => {
   return z.any().superRefine(async (value, ctx) => {
     const res = await zodType.safeParseAsync(value);
