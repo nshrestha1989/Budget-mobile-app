@@ -2,11 +2,20 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { MutationConfig } from '@/lib/react-query';
 import { FamilyMember } from '@/types/family';
-import { api } from '@/lib/api-client';
+import { database,ID } from '@/lib/API/appwrite/appwrite';
 
-export const deleteFamily = async (id: number): Promise<number> => {
-  await api.delete(`/api/Families/${id}`);
-  return id;
+const {
+  VITE_DATABASE_ID,
+  VITE_FAMILIES_COLLECTION_ID
+} =import.meta.env;
+
+export const deleteFamily = async (id: string): Promise<any> => {
+  const response = await database.deleteDocument(
+    VITE_DATABASE_ID!,
+    VITE_FAMILIES_COLLECTION_ID!,
+    id
+  );
+  return response; 
 };
 
 type UseDeleteFamilyOptions = {
@@ -18,12 +27,12 @@ export const useDeleteFamily = ({ mutationConfig }: UseDeleteFamilyOptions = {})
 
   return useMutation({
     mutationFn: deleteFamily,
-    onMutate: async (id: number) => {
+    onMutate: async (id: string) => {
       await queryClient.cancelQueries({ queryKey: ['families'] });
 
       const previousFamilies = queryClient.getQueryData<FamilyMember[]>(['families']);
 
-      queryClient.setQueryData(['families'], (old: FamilyMember[] | undefined) =>
+      queryClient.setQueryData(['families'], (old: FamilyMember[] ) =>
         old ? old.filter(family => family.familyId !== id) : []
       );
 
@@ -33,10 +42,10 @@ export const useDeleteFamily = ({ mutationConfig }: UseDeleteFamilyOptions = {})
 
       return { previousFamilies, id };
     },
-    onError: (error, id: number, context: any) => {
+    onError: (error, id: string, context: any) => {
       queryClient.setQueryData(['families'], context.previousFamilies);
     },
-    onSuccess: async (id: number, variables: number, context: any) => {
+    onSuccess: async (id: string, variables: string, context: any) => {
       // Clear offline actions related to this family
       const offlineActions = queryClient.getQueryData<{ id: string; action: 'create' | 'delete' }[]>(['offlineActions']) || [];
       const updatedActions = offlineActions.filter(action => !(action.id === id.toString() && action.action === 'create'));

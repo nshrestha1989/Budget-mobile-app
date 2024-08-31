@@ -1,5 +1,5 @@
 export type FamilyMember = {
-    familyId: number;
+    familyId: string;
     familyName: string;
   };
   
