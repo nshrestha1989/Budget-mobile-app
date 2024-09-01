@@ -14,13 +14,13 @@ import {
   f7,
 } from "framework7-react";
 import { useForm } from "react-hook-form";
-import { List } from "@/components/ui/List";
+import { List } from "@/components/ui/list";
 import { useState } from "react";
 import { useToast } from "@/hooks/useToast";
 
 
 import { useAuth } from "../api/login";
-import { Form, FormListInputField } from "@/components/ui/Form";
+import { Form, FormListInputField } from "@/components/ui/form";
 
 
 export const LoginForm = ({ onSuccess }: { onSuccess?: () => void }) => {

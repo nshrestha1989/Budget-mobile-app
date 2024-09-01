@@ -3,11 +3,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
 import { z } from "zod";
-import { List } from "@/components/ui/List";
+import { List } from "@/components/ui/list";
 import { zodAlwaysRefine } from "@/lib/utils";
 import { signupInputSchema } from "@/types/auth";
 import { useSignup } from "../hooks/useSignup";
-import { Form, FormListInputField, FormListItemCheckboxField } from "@/components/ui/Form";
+import { Form, FormListInputField, FormListItemCheckboxField } from "@/components/ui/form";
 
 
 const signupFormSchema = zodAlwaysRefine(
