@@ -12,11 +12,16 @@ import {
 } from "framework7-react";
 import LineChart from "../components/Charts/LineChart";
 import { useAuth } from "@/features/auth/api/login";
-
+import { useRouter } from "@/hooks/useRouter";
+import { useAccounts } from "@/features/account/hooks/getAccounts";
 
 const DashBoard = () => {
+  const router = useRouter();
   const [accounts, setAccounts] = useState<string[]>([]);
   const { logout } = useAuth();
+
+  const { data:accountData=[], isLoading,  isPending, refetch } =  useAccounts({});
+
   const addAccount = () => {
     f7.dialog.prompt("Enter account name:", (accountName) => {
       if (accountName && !accounts.includes(accountName)) {
@@ -44,17 +49,23 @@ const DashBoard = () => {
       </Block>
 
       <Block strongIos outlineIos className="grid grid-cols-2">
-        {accounts.map((account, index) => (
+        {accountData.map((account, index) => (
           <Button
             key={index}
             fill
             className="m-1"
             onClick={() => handleButtonClick(index)}
           >
-            {account}
+           {account.accountName || "Unknown Account"}
+
           </Button>
         ))}
-        <Button className="m-2" outline onClick={addAccount}>
+        <Button className="m-2" outline 
+         onClick={() => {
+          router.navigate("/request/new/");
+        }}
+        
+        >
           <Icon material="add_circle" />
           Add Account
         </Button>

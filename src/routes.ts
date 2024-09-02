@@ -3,7 +3,7 @@ import AboutPage from './pages/about';
 import FormPage from './pages/form';
 import Dashboard from './pages/dashboard'
 import Family from './pages/family';
-import ViewAccount from './pages/viewAccount';
+import ViewAccount from './pages/AccountDetail';
 import AddAccount from './pages/addAccount';
 import AuthLandingPage from "@/pages/auth/AuthForm";
 import DynamicRoutePage from './pages/dynamic-route';
@@ -12,6 +12,7 @@ import SignupPage from "@/pages/auth/signup";
 import NotFoundPage from './pages/404';
 import HomePage from './pages/home.js';
 import SplashPage from './pages/splash';
+import AccountDetail from './pages/AccountDetail';
 
 var routes = [
   {
@@ -41,6 +42,14 @@ var routes = [
   {
     path: "/auth/",
     component: AuthLandingPage,
+  },
+  {
+    path: "/request/new/",
+    component: AccountDetail,
+  },
+  {
+    path: "/request/:requestId/edit/",
+    component: AccountDetail,
   },
 
 {

@@ -2,12 +2,12 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { v4 as uuidv4 } from 'uuid';
 import { MutationConfig } from '@/lib/react-query';
-import { FamilyMember } from '../types';
+import { Account } from '../type';
 import { database,ID } from '@/lib/API/appwrite/appwrite';
 
 const {
   VITE_DATABASE_ID,
-  VITE_FAMILIES_COLLECTION_ID
+  VITE_ACCOUNT_COLLECTION_ID
 } =import.meta.env;
 export const createFamily = async (familyName: string): Promise<any> => {
 
@@ -18,7 +18,7 @@ export const createFamily = async (familyName: string): Promise<any> => {
   }
   const response = await database.createDocument(
     VITE_DATABASE_ID!,
-    VITE_FAMILIES_COLLECTION_ID!,
+    VITE_ACCOUNT_COLLECTION_ID!,
     ID.unique(),
     userData
   );
@@ -35,14 +35,14 @@ export const useSaveFamily = ({ mutationConfig }: UseSaveFamilyOptions = {}) => 
   return useMutation({
     mutationFn: createFamily,
     onMutate: async (familyName: string) => {
-      await queryClient.cancelQueries({ queryKey: ['families'] });
+      await queryClient.cancelQueries({ queryKey: ['accounts'] });
 
-      const previousFamilies = queryClient.getQueryData<FamilyMember[]>(['families']);
+      const previousFamilies = queryClient.getQueryData<Account[]>(['accounts']);
 
       const temporaryId = uuidv4();
       const newFamily = { familyId: temporaryId, familyName };
 
-      queryClient.setQueryData(['families'], (old: FamilyMember[] | undefined) => {
+      queryClient.setQueryData(['accounts'], (old: Account[] | undefined) => {
         if (!old) return [];
         return [...old, newFamily];
       });
@@ -54,12 +54,12 @@ export const useSaveFamily = ({ mutationConfig }: UseSaveFamilyOptions = {}) => 
       return { previousFamilies, temporaryId };
     },
     onError: (error, familyName, context: any) => {
-      queryClient.setQueryData(['families'], context.previousFamilies);
+      queryClient.setQueryData(['accounts'], context.previousFamilies);
     },
-    onSuccess: async (data: FamilyMember, familyName: string, context: any) => {
-      queryClient.setQueryData(['families'], (old: FamilyMember[] | undefined) => {
+    onSuccess: async (data: Account, familyName: string, context: any) => {
+      queryClient.setQueryData(['accounts'], (old: Account[] | undefined) => {
         if (!old) return [data];
-        return old.map(family => family.familyId === context.temporaryId ? data : family);
+        return old.map(family => family.accountId === context.temporaryId ? data : family);
       });
 
       queryClient.refetchQueries({ queryKey: ['families'] });
