@@ -1,4 +1,4 @@
-import { Block } from "framework7-react";
+import { Block, Button } from "framework7-react";
 import { useEffect } from "react";
 import { useAccount } from "../hooks/getAccount";
 import { List } from "@/components/ui/list";
@@ -6,6 +6,12 @@ import { FormListInputField } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { useDialog } from "@/hooks/useDialog";
+import { useSaveAccount } from "../hooks/useSaveAccount";
+import { account } from "@/lib/API/appwrite/appwrite";
+import { useRouter } from "@/hooks/useRouter";
+
+
 
 export type AccountFormProps = {
   accountId?: string;
@@ -15,12 +21,15 @@ export const accountInputSchema = z.object({
   accountType: z.string().optional(),
   initialBalance: z.number().optional(),
   accountName: z.string().min(1, "Account Name is required"),
+  users:z.string().optional()
 });
 
-type AccountFormInput = z.infer<typeof accountInputSchema>;
+export type AccountFormInput = z.infer<typeof accountInputSchema>;
 
 export const AccountForm = ({ accountId }: AccountFormProps) => {
-  const { data: account, isLoading } = useAccount({
+  const dialog = useDialog();
+  const router = useRouter();
+  const { data: budgetAccount, isLoading } = useAccount({
     accountId: accountId || "0",
   });
 
@@ -29,27 +38,47 @@ export const AccountForm = ({ accountId }: AccountFormProps) => {
     resolver: zodResolver(accountInputSchema),
   });
 
+  const { mutate: createAccount, isPending } = useSaveAccount({
+    mutationConfig: {
+      onSuccess: () => {
+        dialog.close();
+        dialog.alert("Successfully saved as draft");
+        router.navigate("/dashboard/");
+      },
+      onError: (error: any) => {
+        console.error('Error creating account:', error);
+        dialog.close(); 
+      }
+    }
+  });
+
   useEffect(() => {
-    if (account) {
-      // Ensure account data matches the schema
+    if (budgetAccount) {
       const requestValues: AccountFormInput = {
-        accountName: account[0].accountName || "test",
-        accountType: account[0].accountType || "test",
-        initialBalance: account[0].initialBalance
-          ,
+        accountName: budgetAccount.accountName || "",
+        accountType: budgetAccount.accountType || "",
+        initialBalance: budgetAccount.initialBalance || 0,
       };
       console.log(requestValues);
       form.reset(requestValues);
     }
-  }, [account, form]);
+  }, [budgetAccount, form]);
 
   if (isLoading) {
     return <Block>Loading...</Block>;
   }
 
+  const submit = async (values: AccountFormInput) => {
+    console.log(values)
+    dialog.preloader("Submitting Account").open();
+   // const currentUser= await account.get();
+   
+    createAccount(values);
+  };
+
   return (
-    <Block>
-      <List dividersIos={false}>
+    <form onSubmit={form.handleSubmit(submit)}>
+      <List dividersIos={true} strongIos={true} strongMd={true} outlineIos={true}>
         <FormListInputField
           control={form.control}
           name="accountName"
@@ -60,8 +89,8 @@ export const AccountForm = ({ accountId }: AccountFormProps) => {
           control={form.control}
           name="initialBalance"
           label="Amount"
+          valueAs="number"
           placeholder="Enter Amount"
-          type="number" // Ensure this is of type number
         />
         <FormListInputField
           control={form.control}
@@ -70,6 +99,9 @@ export const AccountForm = ({ accountId }: AccountFormProps) => {
           placeholder="Enter Account Type"
         />
       </List>
-    </Block>
+      <Button fill large type="submit" disabled={isPending}>
+        Submit
+      </Button>
+    </form>
   );
 };

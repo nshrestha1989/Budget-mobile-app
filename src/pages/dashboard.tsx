@@ -32,8 +32,8 @@ const DashBoard = () => {
     });
   };
 
-  const handleButtonClick = (id: number) => {
-    f7.views.main.router.navigate(`/product/${id}/`);
+  const handleButtonClick = (id: string) => {
+    f7.views.main.router.navigate(`/account/${id}/edit/`);
   };
 
   const handleSignOut = async ()=>{
@@ -54,7 +54,7 @@ const DashBoard = () => {
             key={index}
             fill
             className="m-1"
-            onClick={() => handleButtonClick(index)}
+            onClick={() => handleButtonClick(account.accountId)}
           >
            {account.accountName || "Unknown Account"}
 

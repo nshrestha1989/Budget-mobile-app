@@ -139,9 +139,6 @@ const FormListInputField = <
                 }}
                 onChange={(e) => {
                   let value = e.target.value;
-                  if (isFile) {
-                    value = e.target.files;
-                  }
                   if (valueAs && !isFile) {
                     value = coerceValue(valueAs, value);
                   }
@@ -165,6 +162,7 @@ const FormListInputField = <
     ></FormField>
   );
 };
+
 FormListInputField.displayName = "f7-list-item";
 
 const FormListFileUploadField = <

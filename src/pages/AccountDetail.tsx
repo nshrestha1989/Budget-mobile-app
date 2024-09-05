@@ -11,7 +11,7 @@ export default () => {
   return (
     <PageLayout requireAuth>
       <Navbar backLink="Back">
-        <NavTitle>{isNew ? "New" : "Edit"} Request</NavTitle>
+        <NavTitle>{isNew ? "New" : "Edit"} Accounts</NavTitle>
       </Navbar>
       <AccountForm accountId={accountId}/>
     </PageLayout>

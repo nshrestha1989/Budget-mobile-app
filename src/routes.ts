@@ -3,7 +3,6 @@ import AboutPage from './pages/about';
 import FormPage from './pages/form';
 import Dashboard from './pages/dashboard'
 import Family from './pages/family';
-import ViewAccount from './pages/AccountDetail';
 import AddAccount from './pages/addAccount';
 import AuthLandingPage from "@/pages/auth/AuthForm";
 import DynamicRoutePage from './pages/dynamic-route';
@@ -36,10 +35,6 @@ var routes = [
     component: Family,
   },
   {
-    path: '/product/:id/',
-    component: ViewAccount,
-  },
-  {
     path: "/auth/",
     component: AuthLandingPage,
   },
@@ -48,7 +43,7 @@ var routes = [
     component: AccountDetail,
   },
   {
-    path: "/request/:requestId/edit/",
+    path: "/account/:accountId/edit/",
     component: AccountDetail,
   },
 
