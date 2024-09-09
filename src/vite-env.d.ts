@@ -8,6 +8,8 @@ interface ImportMetaEnv {
   readonly VITE_APP_OPTIONS_ABUSE:string;
   readonly VITE_COLLECTION_ID:string;
   readonly VITE_ACCOUNT_COLLECTION_ID:string;
+  readonly VITE_CATEGORIES_COLLECTION_ID:string;
+  readonly VITE_TRANSACTION_COLLECTION_ID:string;
 }
 
 interface ImportMeta {

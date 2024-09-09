@@ -1,7 +1,8 @@
-import { queryOptions, useQuery } from '@tanstack/react-query';
-import { QueryConfig } from '@/lib/react-query';
+import { queryOptions, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { MutationConfig, QueryConfig } from '@/lib/react-query';
 import { database } from '@/lib/API/appwrite/appwrite';
 import { Account } from '../type';
+
 
 
 const {
@@ -19,9 +20,9 @@ export const fetchAccounts = async () => {
   const accounts: Account[] = response.documents.map((doc:any) => ({
     accountId: doc.$id, 
     users: doc.users,
-    accountType:doc.accountType,
-    initialBalance:doc.initialBalance,
-    accountName:doc.accountName
+    AccountType:doc.AccountType,
+    InitialBalance:doc.InitialBalance,
+    AccountName:doc.AccountName
   }));
 
   return accounts;
@@ -32,7 +33,8 @@ export const getAccountsQueryOptions = () => {
   return queryOptions<Account[] | undefined>({
     queryKey: ['accounts'],
     queryFn:()=> fetchAccounts(),
-    networkMode: "offlineFirst"
+    // networkMode: "offlineFirst"
+
   });
 };
 
@@ -46,3 +48,6 @@ export const useAccounts = ({ queryConfig }: UseAccountsOptions = {}) => {
     ...queryConfig,
   });
 };
+
+
+

@@ -22,9 +22,9 @@ export const fetchAccount = async (accountId:string) => {
   const account: Account = {
     accountId: doc.$id,
     users: doc.users,
-    accountType: doc.accountType,
-    initialBalance: doc.initialBalance,
-    accountName: doc.accountName
+    AccountType:doc.AccountType,
+    InitialBalance:doc.InitialBalance,
+    AccountName:doc.AccountName
   };
 
   return account;
@@ -34,7 +34,7 @@ export const getAccountsQueryOptions = (accountId:string) => {
   return queryOptions<Account | undefined>({
     queryKey: ['account',accountId],
     queryFn:()=> fetchAccount(accountId),
-    networkMode: "offlineFirst"
+    enabled: !!accountId
   });
 };
 

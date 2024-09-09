@@ -1,7 +1,7 @@
 // src/hooks/useDeleteFamily.ts
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { MutationConfig } from '@/lib/react-query';
-import { FamilyMember } from '@/types/family';
+import { FamilyMember } from '../types';
 import { database,ID } from '@/lib/API/appwrite/appwrite';
 
 const {

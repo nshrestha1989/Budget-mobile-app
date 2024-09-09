@@ -7,9 +7,11 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useDialog } from "@/hooks/useDialog";
-import { useSaveAccount } from "../hooks/useSaveAccount";
+import { useDeleteAccount, useSaveAccount } from "../hooks/useSaveAccount";
 import { account } from "@/lib/API/appwrite/appwrite";
 import { useRouter } from "@/hooks/useRouter";
+
+
 
 
 
@@ -18,9 +20,9 @@ export type AccountFormProps = {
 };
 
 export const accountInputSchema = z.object({
-  accountType: z.string().optional(),
-  initialBalance: z.number().optional(),
-  accountName: z.string().min(1, "Account Name is required"),
+  AccountType: z.string().optional(),
+  InitialBalance: z.number().optional(),
+  AccountName: z.string().min(1, "Account Name is required"),
   users:z.string().optional()
 });
 
@@ -29,7 +31,7 @@ export type AccountFormInput = z.infer<typeof accountInputSchema>;
 export const AccountForm = ({ accountId }: AccountFormProps) => {
   const dialog = useDialog();
   const router = useRouter();
-  const { data: budgetAccount, isLoading } = useAccount({
+  const { data: budgetAccount,refetch ,isLoading } = useAccount({
     accountId: accountId || "0",
   });
 
@@ -55,9 +57,9 @@ export const AccountForm = ({ accountId }: AccountFormProps) => {
   useEffect(() => {
     if (budgetAccount) {
       const requestValues: AccountFormInput = {
-        accountName: budgetAccount.accountName || "",
-        accountType: budgetAccount.accountType || "",
-        initialBalance: budgetAccount.initialBalance || 0,
+        AccountName: budgetAccount.AccountName || "",
+        AccountType: budgetAccount.AccountType || "",
+        InitialBalance: budgetAccount.InitialBalance || 0,
       };
       console.log(requestValues);
       form.reset(requestValues);
@@ -73,35 +75,81 @@ export const AccountForm = ({ accountId }: AccountFormProps) => {
     dialog.preloader("Submitting Account").open();
    // const currentUser= await account.get();
    
-    createAccount(values);
+    createAccount({account:values,id:accountId});
   };
+ 
+
 
   return (
+    <>
     <form onSubmit={form.handleSubmit(submit)}>
       <List dividersIos={true} strongIos={true} strongMd={true} outlineIos={true}>
         <FormListInputField
           control={form.control}
-          name="accountName"
+          name="AccountName"
           label="Account Name"
           placeholder="Enter Account Name"
         />
         <FormListInputField
           control={form.control}
-          name="initialBalance"
+          name="InitialBalance"
           label="Amount"
           valueAs="number"
           placeholder="Enter Amount"
         />
         <FormListInputField
           control={form.control}
-          name="accountType"
+          name="AccountType"
           label="Account Type"
           placeholder="Enter Account Type"
         />
       </List>
+      <Block>
       <Button fill large type="submit" disabled={isPending}>
         Submit
       </Button>
+      </Block>
+     { accountId &&   <DeleteComponent accountId={accountId}></DeleteComponent>}
+
     </form>
+ 
+       
+
+    </>
   );
 };
+
+ const DeleteComponent =(props:any)=>{
+  const dialog = useDialog();
+  const router = useRouter();
+  const updateRequestMutation = useDeleteAccount({
+    mutationConfig: {
+      onSuccess: () => {
+        dialog.close();
+        dialog.alert("Successfully Deleted");
+        router.navigate("/dashboard/");
+      },
+      onError: (error) => {
+        dialog.close();
+        dialog.alert("Error saving  draft");
+      },
+    },
+  });
+  const handleDelete = (accountId: string) => {
+    debugger
+    if (confirm('Are you sure you want to delete this account?')) {
+      updateRequestMutation.mutate(accountId);
+    }
+  };
+
+  return  <Block><Button
+  fill
+  large
+  type="button"
+   color="red"
+  onClick={() => props.accountId && handleDelete(props.accountId)}
+>
+  Delete
+</Button>
+</Block>
+ }

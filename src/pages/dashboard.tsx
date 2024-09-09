@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useTransition } from "react";
 import {
   Page,
   Navbar,
@@ -14,23 +14,20 @@ import LineChart from "../components/Charts/LineChart";
 import { useAuth } from "@/features/auth/api/login";
 import { useRouter } from "@/hooks/useRouter";
 import { useAccounts } from "@/features/account/hooks/getAccounts";
+import { useCategories } from "@/features/category/hooks/UseCategory";
+import { useTrasaction } from "@/features/Records/hooks/useTransactions";
+
 
 const DashBoard = () => {
   const router = useRouter();
   const [accounts, setAccounts] = useState<string[]>([]);
   const { logout } = useAuth();
-
+  const { data: categoriesData } = useCategories({});
+  const { data } = useTrasaction({});
+ console.log(data)
   const { data:accountData=[], isLoading,  isPending, refetch } =  useAccounts({});
 
-  const addAccount = () => {
-    f7.dialog.prompt("Enter account name:", (accountName) => {
-      if (accountName && !accounts.includes(accountName)) {
-        setAccounts([...accounts, accountName]);
-      } else if (accounts.includes(accountName)) {
-        f7.dialog.alert("Account already exists.");
-      }
-    });
-  };
+
 
   const handleButtonClick = (id: string) => {
     f7.views.main.router.navigate(`/account/${id}/edit/`);
@@ -56,7 +53,7 @@ const DashBoard = () => {
             className="m-1"
             onClick={() => handleButtonClick(account.accountId)}
           >
-           {account.accountName || "Unknown Account"}
+           {account.AccountName || "Unknown Account"}
 
           </Button>
         ))}
@@ -72,7 +69,14 @@ const DashBoard = () => {
         <div></div>
         <div></div>
         <div className="right-0">
-          <Icon material="list" />
+          <Button 
+            onClick={() => {
+              router.navigate("/records/list/");
+            }}
+          >
+          <Icon material="list"  />
+          </Button>
+     
         </div>
       </Block>
 
