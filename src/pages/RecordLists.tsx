@@ -1,14 +1,14 @@
 import { useAccounts } from '@/features/account/hooks/getAccounts';
 import { EmptyRequestsListItem } from '@/features/Records/component/EmptyRequestListItem';
 import { RequestsListItem } from '@/features/Records/component/RequestListItem';
-import { useTrasaction } from '@/features/Records/hooks/useTransactions';
+import { useTrasactions } from '@/features/Records/hooks/useTransactions';
 import { useRouter } from '@/hooks/useRouter';
 import { Block, Button, Fab, FabButton, FabButtons, Icon, List, ListItem } from 'framework7-react';
 import React from 'react'
 
-export default function RecordLists(props:any) {
+export default function RecordLists() {
   const router = useRouter();
-    const { data, isLoading,  isPending, refetch } =  useTrasaction({});
+    const { data, isPending } =  useTrasactions({});
 
   return (
     <div>
@@ -34,12 +34,12 @@ export default function RecordLists(props:any) {
             label="New Record"
             fabClose
             onClick={() => {
-              router.navigate("/request/new/");
+              router.navigate("/records/new/");
             }}
           >
             <Icon ios="f7:pencil" md="f7:pencil" />
           </FabButton>
-          <FabButton label="Edit Record" fabClose>
+          <FabButton label="Transfer" fabClose>
             <Icon ios="f7:checkmark_alt" md="f7:checkmark_alt" />
           </FabButton>
         </FabButtons>

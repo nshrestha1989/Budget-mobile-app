@@ -12,6 +12,7 @@ import NotFoundPage from './pages/404';
 import HomePage from './pages/home.js';
 import SplashPage from './pages/splash';
 import AccountDetail from './pages/AccountDetail';
+import RecordDetail from './pages/RecordDetail';
 import Records from './pages/Records';
 
 var routes = [
@@ -51,6 +52,14 @@ var routes = [
   {
     path: "/records/list/",
     component: Records,
+  },
+  {
+    path: "/records/new/",
+    component: RecordDetail,
+  },
+  {
+    path: "/records/:transcationId/edit/",
+    component: RecordDetail,
   },
 
 {

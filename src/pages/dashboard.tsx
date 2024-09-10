@@ -15,7 +15,7 @@ import { useAuth } from "@/features/auth/api/login";
 import { useRouter } from "@/hooks/useRouter";
 import { useAccounts } from "@/features/account/hooks/getAccounts";
 import { useCategories } from "@/features/category/hooks/UseCategory";
-import { useTrasaction } from "@/features/Records/hooks/useTransactions";
+import { useTrasactions } from "@/features/Records/hooks/useTransactions";
 
 
 const DashBoard = () => {
@@ -23,7 +23,7 @@ const DashBoard = () => {
   const [accounts, setAccounts] = useState<string[]>([]);
   const { logout } = useAuth();
   const { data: categoriesData } = useCategories({});
-  const { data } = useTrasaction({});
+  const { data } = useTrasactions({});
  console.log(data)
   const { data:accountData=[], isLoading,  isPending, refetch } =  useAccounts({});
 

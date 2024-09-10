@@ -1,4 +1,4 @@
-export type Transaction = {
+export type Record = {
     transactionId:string,
     categoryId:string,
     transactionDate: string;

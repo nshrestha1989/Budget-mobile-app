@@ -1,6 +1,6 @@
 
 import { Badge, ListItem } from "framework7-react";
-import { Transaction } from "../types";
+import { Record } from "../types";
 import { cn, formatDate } from "@/lib/utils";
 
 const requestStatusColorMapping = (status: any) => {
@@ -22,11 +22,11 @@ export const RequestsListItem = ({
   request,
   className,
 }: {
-  request: Transaction ;
+  request: Record ;
   className?: HTMLDivElement["className"];
 }) => {
   return (
-    <ListItem link={`/request/${request.transactionId}/`} className={cn(className)}>
+    <ListItem link={`/records/${request.transactionId}/edit/`} className={cn(className)}>
       <div>
         <div className="font-medium text-primary">
           {request.description} 
@@ -38,7 +38,6 @@ export const RequestsListItem = ({
           </div>
           <div>Amount: {request.amount}</div>
           <div>Transaction Date: {formatDate(request.transactionDate)}</div>
-          <div>Is Income : {request.isIncome}</div>
         </div>
       </div>
       <div>
