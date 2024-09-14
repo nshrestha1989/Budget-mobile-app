@@ -1,5 +1,5 @@
 export type Category = {
-    categoryId:string,
+    $id:string,
     categoryname: string;
   };
   

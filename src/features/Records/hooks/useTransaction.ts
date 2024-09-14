@@ -20,7 +20,7 @@ export const fetchTransaction = async (accountId:string|undefined) => {
 
   const record: Record = {
     transactionId:doc.$id,
-    categoryId: doc.categories.$id, 
+    categories: doc.categories, 
     transactionDate: doc.transactionDate, 
     description:doc.description,
     amount :doc.amount,

@@ -71,7 +71,7 @@ export const RecordForm = ({ transcationId: transcationId }: TransactionFormProp
         description: transcationData.description ,
         amount: transcationData.amount || 0,
         isIncome:transcationData.isIncome,
-        categories:transcationData.categoryId
+        categories:transcationData.categories.$id
       };
       
       console.log(requestValues);
@@ -117,7 +117,7 @@ export const RecordForm = ({ transcationId: transcationId }: TransactionFormProp
           >
             <option>Select Category</option>
             {categories?.map((category:Category, index:number) => (
-              <option key={index} value={category.categoryId}>
+              <option key={index} value={category.$id}>
                 {category.categoryname}
               </option>
             ))}

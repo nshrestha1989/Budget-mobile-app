@@ -16,7 +16,7 @@ export const fetchCategories = async (): Promise<Record[]> => {
 
   const families: Record[] = response.documents.map((doc) => ({
     transactionId:doc.$id,
-    categoryId: doc.categoryId, 
+    categories: doc.categories, 
     transactionDate: doc.transactionDate, 
     description:doc.description,
     amount :doc.amount,
