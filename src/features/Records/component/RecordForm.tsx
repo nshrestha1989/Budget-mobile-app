@@ -127,7 +127,7 @@ export const RecordForm = ({ transcationId: transcationId }: TransactionFormProp
             name="transactionDate"
             control={form.control}
             label="Transaction Date"
-            type="date"
+            type="datepicker"
             placeholder="DD-MM-YYYY"
           />
       </List>
