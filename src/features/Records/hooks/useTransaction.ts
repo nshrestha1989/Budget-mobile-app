@@ -8,11 +8,11 @@ const {
   VITE_DATABASE_ID,
   VITE_TRANSACTION_COLLECTION_ID
 } =import.meta.env;
-export const fetchTransaction = async (accountId:string) => {
+export const fetchTransaction = async (accountId:string|undefined) => {
   const response = await database.getDocument(
     VITE_DATABASE_ID!,
     VITE_TRANSACTION_COLLECTION_ID!,
-    accountId
+    accountId!
     
   );
 
@@ -31,16 +31,16 @@ export const fetchTransaction = async (accountId:string) => {
   return record;
 
 }
-export const getTransactionQueryOptions = (transactionId:string) => {
+export const getTransactionQueryOptions = (transactionId:string|undefined) => {
   return queryOptions<Record | undefined>({
     queryKey: ['transaction',transactionId],
     queryFn:()=> fetchTransaction(transactionId),
-    enabled: !!transactionId
+    enabled: !!transactionId 
   });
 };
 
 export type UseAccountsOptions = {
-  transactionId: string;
+  transactionId: string|undefined;
   queryConfig?: QueryConfig<typeof getTransactionQueryOptions>;
 };
 

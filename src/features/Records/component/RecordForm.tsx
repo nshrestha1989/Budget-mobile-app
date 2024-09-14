@@ -42,7 +42,7 @@ export const RecordForm = ({ transcationId: transcationId }: TransactionFormProp
   const dialog = useDialog();
   const router = useRouter();
   const { data: transcationData,isLoading } = useTrasaction({
-    transactionId: transcationId || "0",
+    transactionId: transcationId ,
   });
   const {data:categories} = useCategories({});
   const form = useForm<TransactionFormInput>({
@@ -77,7 +77,7 @@ export const RecordForm = ({ transcationId: transcationId }: TransactionFormProp
       console.log(requestValues);
       form.reset(requestValues);
     }
-  }, [transcationData, form]);
+  }, [transcationData, form,transcationId]);
 
   if (isLoading) {
     return <Block>Loading...</Block>;
