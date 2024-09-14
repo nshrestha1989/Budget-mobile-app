@@ -2,7 +2,7 @@ import { Block, Button } from "framework7-react";
 import { useEffect, useTransition } from "react";
 import { useAccount } from "../../account/hooks/getAccount";
 import { List } from "@/components/ui/list";
-import { FormListInputField } from "@/components/ui/form";
+import { FormListInputField, FormListItemCheckboxField } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -11,7 +11,10 @@ import { useDeleteAccount, useSaveAccount } from "../../account/hooks/useSaveAcc
 import { account } from "@/lib/API/appwrite/appwrite";
 import { useRouter } from "@/hooks/useRouter";
 import { useTrasaction } from "../hooks/useTransaction";
-import { useSaveTransaction } from "../hooks/useSaveTransaction";
+import { useDeleteTranscation, useSaveTransaction } from "../hooks/useSaveTransaction";
+import { Category } from "@/features/category/types";
+import { useCategories } from "@/features/category/hooks/UseCategory";
+import { formatDate } from "@/lib/utils";
 
 
 // categoryId:string,
@@ -29,7 +32,8 @@ export const transactionInputSchema = z.object({
   transactionDate: z.string(),
   description: z.string().optional(),
   amount: z.number().optional(),
-  isIncome: z.boolean().optional()
+  isIncome: z.boolean().default(false),
+  categories:z.string()
 });
 
 export type TransactionFormInput = z.infer<typeof transactionInputSchema>;
@@ -40,7 +44,7 @@ export const RecordForm = ({ transcationId: transcationId }: TransactionFormProp
   const { data: transcationData,isLoading } = useTrasaction({
     transactionId: transcationId || "0",
   });
-
+  const {data:categories} = useCategories({});
   const form = useForm<TransactionFormInput>({
     mode: "onBlur",
     resolver: zodResolver(transactionInputSchema),
@@ -51,7 +55,7 @@ export const RecordForm = ({ transcationId: transcationId }: TransactionFormProp
       onSuccess: () => {
         dialog.close();
         dialog.alert("Successfully saved as draft");
-        router.navigate("/dashboard/");
+        router.navigate("/records/list/");
       },
       onError: (error: any) => {
         console.error('Error creating account:', error);
@@ -63,10 +67,11 @@ export const RecordForm = ({ transcationId: transcationId }: TransactionFormProp
   useEffect(() => {
     if (transcationData) {
       const requestValues: TransactionFormInput = {
-        transactionDate: transcationData.transactionDate ,
+        transactionDate: formatDate(transcationData.transactionDate) ,
         description: transcationData.description ,
         amount: transcationData.amount || 0,
-        isIncome:transcationData.isIncome
+        isIncome:transcationData.isIncome,
+        categories:transcationData.categoryId
       };
       
       console.log(requestValues);
@@ -103,33 +108,36 @@ export const RecordForm = ({ transcationId: transcationId }: TransactionFormProp
           label="description"
           placeholder="Enter description"
         />
-        {/* <FormListInputField
-          control={form.control}
-          name="transactionDate"
-          label="transactionDate"
-          placeholder="Enter Account Type"
-        /> */}
-         {/* <FormListInputField
-            name="state"
+        <FormListInputField
+            name="categories"
             control={form.control}
-            label="State"
+            label="Category"
             type="select"
-            placeholder="Select State"
+            placeholder="Select category"
           >
-            <option>Select State</option>
-            {["WA","NSW"].map((state, index) => (
-              <option key={index} value={state}>
-                {state}
+            <option>Select Category</option>
+            {categories?.map((category:Category, index:number) => (
+              <option key={index} value={category.categoryId}>
+                {category.categoryname}
               </option>
             ))}
-                </FormListInputField> */}
+          </FormListInputField>
               <FormListInputField
             name="transactionDate"
             control={form.control}
             label="Transaction Date"
             type="datepicker"
             placeholder="DD-MM-YYYY"
+            calendarParams={{
+          dateFormat: { weekday: 'long', month: 'long', day: '2-digit', year: 'numeric' },
+        }}
           />
+            <FormListItemCheckboxField
+          control={form.control}
+          name="isIncome"
+        >
+          <div>Is Income</div>
+        </FormListItemCheckboxField>
       </List>
       <Block>
       <Button fill large type="submit" disabled={isPending}>
@@ -149,12 +157,12 @@ export const RecordForm = ({ transcationId: transcationId }: TransactionFormProp
  const DeleteComponent =(props:any)=>{
   const dialog = useDialog();
   const router = useRouter();
-  const updateRequestMutation = useDeleteAccount({
+  const updateRequestMutation = useDeleteTranscation({
     mutationConfig: {
       onSuccess: () => {
         dialog.close();
         dialog.alert("Successfully Deleted");
-        router.navigate("/dashboard/");
+        router.navigate("/records/list/");
       },
       onError: (error) => {
         dialog.close();

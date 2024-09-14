@@ -16,13 +16,11 @@ export const fetchTransaction = async (accountId:string) => {
     
   );
 
-
   const doc = response; 
-
 
   const record: Record = {
     transactionId:doc.$id,
-    categoryId: doc.categoryId, 
+    categoryId: doc.categories.$id, 
     transactionDate: doc.transactionDate, 
     description:doc.description,
     amount :doc.amount,
