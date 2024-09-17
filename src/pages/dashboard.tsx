@@ -42,7 +42,9 @@ const DashBoard = () => {
       <Navbar title="Dashboard" />
       <Block strongIos outlineIos className="grid grid-cols-2">
         <BlockTitle className="font-bold">List of Accounts</BlockTitle>
-        <Icon material="settings" className="left-0" />
+        <div className="relative ">
+        <div className="absolute bottom-3 right-0"> <Icon material="settings" className="left-0" /></div>
+      </div>
       </Block>
 
       <Block strongIos outlineIos className="grid grid-cols-2">
@@ -50,7 +52,7 @@ const DashBoard = () => {
           <Button
             key={index}
             fill
-            className="m-1"
+            className="m-2"
             onClick={() => handleButtonClick(account.accountId)}
           >
            {account.AccountName || "Unknown Account"}
@@ -61,25 +63,22 @@ const DashBoard = () => {
          onClick={() => {
           router.navigate("/request/new/");
         }}
-        
         >
           <Icon material="add_circle" />
           Add Account
         </Button>
-        <div></div>
-        <div></div>
-        <div className="right-0">
-          <Button 
-            onClick={() => {
-              router.navigate("/records/list/");
-            }}
-          >
-          <Icon material="list"  />
-          </Button>
-     
-        </div>
       </Block>
-
+      <div className="relative">
+              <div className="absolute bottom-16 right-0 h-16 w-16 ...">
+              <Button 
+                        onClick={() => {
+                          router.navigate("/records/list/");
+                        }}
+                      >
+                      <Icon material="list"  />
+                      </Button>
+              </div>
+        </div>
       <BlockTitle className="m-1 ml-4">Balance Trend</BlockTitle>
       <BlockTitle className="m-1 ml-4 mb-2">$8561</BlockTitle>
       <Block strongIos outlineIos className="grid">
@@ -102,7 +101,6 @@ const DashBoard = () => {
           SIGN OUT
           </Button>
         </div>
-        {/* <BasiqConnectModal isOpen={popupOpened} onClose={closePopup} /> */}
       </Block>
     </Page>
   );

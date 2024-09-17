@@ -33,7 +33,7 @@ const AppContainer = () => {
           {/* Tabbar for switching views-tabs */}
           <Toolbar tabbar icons bottom>
             <Link tabLink="#view-home" tabLinkActive iconIos="f7:house_fill" iconMd="material:dashboard" text="Dashboard" />
-            <Link tabLink="#view-family" iconIos="f7:square_list_fill" iconMd="material:diversity_3" text="Family" />
+            <Link tabLink="#view-family" iconIos="f7:square_list_fill" iconMd="material:diversity_3" text="Todo" />
             <Link tabLink="#view-settings" iconIos="f7:gear" iconMd="material:settings" text="Settings" />
           </Toolbar>
 

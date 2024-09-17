@@ -23,7 +23,7 @@ export const RequestsListItem = ({
     <ListItem link={`/records/${request.transactionId}/edit/`} className={cn(className)}>
       <div>
         <div className="font-medium text-primary">
-          {request.categories.categoryname} 
+          {request.categories?.categoryname} 
         </div>
         <div className="text-muted">
           <div>Description: {request.description}</div>

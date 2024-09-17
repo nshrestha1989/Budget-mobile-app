@@ -53,8 +53,8 @@ const Family = () => {
 
 
   return (
-    <Page name="Family">
-      <Navbar title="Family" />
+    <Page name="Todo">
+      <Navbar title="Todo" />
       <Block>
         <Input
           type="text"
@@ -70,7 +70,7 @@ const Family = () => {
           onClick={handleAddButtonClick}
           disabled={saveMutation.isPending && navigator.onLine}
         >
-          {saveMutation.isPending && navigator.onLine? 'Adding...' : 'Add Member'}
+          {saveMutation.isPending && navigator.onLine? 'Adding...' : 'Add'}
         </Button>
       </Block>
       <List strong dividersIos outlineIos insetMd>
