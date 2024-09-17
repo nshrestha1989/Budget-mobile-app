@@ -60,14 +60,22 @@ const useFormField = () => {
 export type ValueAsType = "number" | "boolean";
 const coerceValue = (type: ValueAsType, value: any) => {
   if (type === "number") {
-    return Number(value);
+    // Allow string to pass through if it's an incomplete decimal input (e.g., "3.")
+    if (value === "" || value === "-" || value.endsWith(".")) {
+      return value;  // Keep as string until a valid number
+    }
+    
+    let temp = parseFloat(value);
+    return isNaN(temp) ? "" : temp;  // Return empty string for invalid number
   }
+
   if (type === "boolean") {
     return typeof value === "string"
       ? value.toLowerCase() === "true"
       : Boolean(value);
   }
 };
+
 
 const FormListInputField = <
   TFieldValues extends FieldValues = FieldValues,
