@@ -36,7 +36,12 @@ const DashBoard = () => {
   const handleSignOut = async ()=>{
     const valid = await logout.mutateAsync();
   }
+  const { data: transactionData } = useTrasactions({});
 
+  const getTotalAmount = () => {
+    if (!transactionData) return 0; 
+    return transactionData.reduce((total, doc) => total + doc.amount, 0);
+  };
   return (
     <Page name="Dashboard">
       <Navbar title="Dashboard" />
@@ -80,9 +85,10 @@ const DashBoard = () => {
               </div>
         </div>
       <BlockTitle className="m-1 ml-4">Balance Trend</BlockTitle>
-      <BlockTitle className="m-1 ml-4 mb-2">$8561</BlockTitle>
-      <Block strongIos outlineIos className="grid">
-        <LineChart />
+      <BlockTitle className="m-1 ml-4 mb-2">{getTotalAmount()}</BlockTitle>
+      <Block strongIos outlineIos className="grid ">
+       <LineChart />
+        
       </Block>
 
       <BlockTitle>Notes</BlockTitle>

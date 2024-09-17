@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactECharts from 'echarts-for-react';
 import { useTrasactions } from '@/features/Records/hooks/useTransactions';
+import { Block } from 'framework7-react';
 
 const LineChart = () => {
   const { data:transactionData, isPending } =  useTrasactions({});
@@ -9,7 +10,7 @@ const LineChart = () => {
     amount: doc.amount
   }))
   const options = {
-    grid: { top: 8, right: 8, bottom: 24, left: 36 },
+    grid: { top: 8, right: 8, bottom: 24, left: 2, containLabel :true },
     xAxis: {
       type: 'category',
       data: data && data.map(d => d.date),
@@ -27,6 +28,7 @@ const LineChart = () => {
     tooltip: {
       trigger: 'axis',
     },
+   
   };
 
   return <ReactECharts option={options} />;
