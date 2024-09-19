@@ -17,11 +17,6 @@ import { useCategories } from "@/features/category/hooks/UseCategory";
 import { formatDate } from "@/lib/utils";
 
 
-// categoryId:string,
-// transactionDate: string;
-// description:string;
-// amount:number;
-// isIncome:boolean;
 
 
 export type TransactionFormProps = {
@@ -71,7 +66,7 @@ export const RecordForm = ({ transcationId: transcationId }: TransactionFormProp
         description: transcationData.description ,
         amount: transcationData.amount || 0,
         isIncome:transcationData.isIncome,
-        categories:transcationData.categories.$id
+        categories:transcationData?.categories?.$id
       };
       
       console.log(requestValues);
@@ -116,8 +111,8 @@ export const RecordForm = ({ transcationId: transcationId }: TransactionFormProp
             placeholder="Select category"
           >
             <option>Select Category</option>
-            {categories?.map((category:Category, index:number) => (
-              <option key={index} value={category.$id}>
+            {categories?.map((category:Category) => (
+              <option key={category.$id} value={category.$id}>
                 {category.categoryname}
               </option>
             ))}

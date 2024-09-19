@@ -19,23 +19,28 @@ export const RequestsListItem = ({
   request: Record ;
   className?: HTMLDivElement["className"];
 }) => {
+
   return (
-    <ListItem link={`/records/${request.transactionId}/edit/`} className={cn(className)}>
+    <ListItem link={`/records/${request.transactionId}/edit/`} className={cn(className)}
+
+    >
+      
       <div>
+      <div className="text-muted">
+          <div>Date: {formatDate(request.transactionDate)}</div>
+        </div>
         <div className="font-medium text-primary">
           {request.categories?.categoryname} 
         </div>
         <div className="text-muted">
           <div>Description: {request.description}</div>
         </div>
-        <div className="text-muted">
-          <div>Date: {formatDate(request.transactionDate)}</div>
-        </div>
+      
       </div>
       <div>
-        <Badge bgColor={requestStatusColorMapping(request.isIncome)}>
-        <div>{request.amount}</div>
-        </Badge>
+        <div className={request.isIncome ?"text-green-600/100":"text-red-600/100"}>
+        <div>{!request.isIncome &&"-"}{request.amount}</div>
+        </div>
       </div>
     </ListItem>
   );

@@ -16,16 +16,14 @@ import { useRouter } from "@/hooks/useRouter";
 import { useAccounts } from "@/features/account/hooks/getAccounts";
 import { useCategories } from "@/features/category/hooks/UseCategory";
 import { useTrasactions } from "@/features/Records/hooks/useTransactions";
+import PieChart from "@/components/Charts/PieChart";
 
 
 const DashBoard = () => {
   const router = useRouter();
-  const [accounts, setAccounts] = useState<string[]>([]);
   const { logout } = useAuth();
-  const { data: categoriesData } = useCategories({});
-  const { data } = useTrasactions({});
- console.log(data)
-  const { data:accountData=[], isLoading,  isPending, refetch } =  useAccounts({});
+
+  const { data:accountData=[]} =  useAccounts({});
 
 
 
@@ -38,6 +36,9 @@ const DashBoard = () => {
   }
   const { data: transactionData } = useTrasactions({});
 
+  const getInitialBalance =()=>{
+   return accountData.reduce((total,doc)=> total + doc.InitialBalance!,0)
+  }
   const getTotalAmount = () => {
     if (!transactionData) return 0; 
     return transactionData.reduce((total, doc) => total + doc.amount, 0);
@@ -52,7 +53,7 @@ const DashBoard = () => {
       </div>
       </Block>
 
-      <Block strongIos outlineIos className="grid grid-cols-2">
+      <Block strongIos outlineIos className="grid grid-cols-2 m-0">
         {accountData.map((account, index) => (
           <Button
             key={index}
@@ -60,11 +61,11 @@ const DashBoard = () => {
             className="m-2"
             onClick={() => handleButtonClick(account.accountId)}
           >
-           {account.AccountName || "Unknown Account"}
+           {account.AccountName || "Unknown Account"} ${account.InitialBalance}
 
           </Button>
         ))}
-        <Button className="m-2" outline 
+        <Button className="mt-2 mx-2" outline 
          onClick={() => {
           router.navigate("/request/new/");
         }}
@@ -72,23 +73,28 @@ const DashBoard = () => {
           <Icon material="add_circle" />
           Add Account
         </Button>
+     
       </Block>
-      <div className="relative">
-              <div className="absolute bottom-16 right-0 h-16 w-16 ...">
-              <Button 
-                        onClick={() => {
-                          router.navigate("/records/list/");
-                        }}
-                      >
-                      <Icon material="list"  />
-                      </Button>
-              </div>
-        </div>
+      <div className="flex justify-end top-0">
+      <Button 
+                   onClick={() => {
+                     router.navigate("/records/list/");
+                   }}
+                 >
+                 <Icon material="list"  />
+      </Button>
+     
+    </div>
+ 
       <BlockTitle className="m-1 ml-4">Balance Trend</BlockTitle>
-      <BlockTitle className="m-1 ml-4 mb-2">{getTotalAmount()}</BlockTitle>
+      <BlockTitle className="m-1 ml-4 mb-2">{getTotalAmount()+getInitialBalance()}</BlockTitle>
       <Block strongIos outlineIos className="grid ">
        <LineChart />
-        
+      
+      </Block>
+      <Block strongIos outlineIos className="grid ">
+      <PieChart/>
+      
       </Block>
 
       <BlockTitle>Notes</BlockTitle>

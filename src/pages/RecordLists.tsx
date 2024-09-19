@@ -1,10 +1,10 @@
-import { useAccounts } from '@/features/account/hooks/getAccounts';
+
 import { EmptyRequestsListItem } from '@/features/Records/component/EmptyRequestListItem';
 import { RequestsListItem } from '@/features/Records/component/RequestListItem';
 import { useTrasactions } from '@/features/Records/hooks/useTransactions';
 import { useRouter } from '@/hooks/useRouter';
-import { Block, Button, Fab, FabButton, FabButtons, Icon, List, ListItem } from 'framework7-react';
-import React from 'react'
+import { Fab, FabButton, FabButtons, Icon, List, ListItem } from 'framework7-react';
+
 
 export default function RecordLists() {
   const router = useRouter();
@@ -14,7 +14,7 @@ export default function RecordLists() {
     <div>
 
 
-<List>
+<List dividersIos  outlineIos strongIos>
         {isPending &&
           Array(3)
             .fill(0)

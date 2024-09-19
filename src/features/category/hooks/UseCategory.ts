@@ -13,12 +13,12 @@ export const fetchCategories = async (): Promise<Category[]> => {
     VITE_CATEGORIES_COLLECTION_ID!
   );
 
-  const families: Category[] = response.documents.map((doc) => ({
-    categoryId: doc.$id, 
+  const categories: Category[] = response.documents.map((doc) => ({
+    $id: doc.$id, 
     categoryname: doc.categoryname,  
   }));
 
-  return families;
+  return categories;
 };
 
 
