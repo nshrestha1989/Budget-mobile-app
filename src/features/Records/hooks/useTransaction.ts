@@ -24,7 +24,8 @@ export const fetchTransaction = async (accountId:string|undefined) => {
     transactionDate: doc.transactionDate, 
     description:doc.description,
     amount :doc.amount,
-    isIncome:doc.isIncome 
+    isIncome:doc.isIncome ,
+    accounts:doc.accounts
 
   };
 

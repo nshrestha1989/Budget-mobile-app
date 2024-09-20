@@ -15,6 +15,8 @@ import { useDeleteTranscation, useSaveTransaction } from "../hooks/useSaveTransa
 import { Category } from "@/features/category/types";
 import { useCategories } from "@/features/category/hooks/UseCategory";
 import { formatDate } from "@/lib/utils";
+import { Account } from "@/features/account/type";
+import { useAccounts } from "@/features/account/hooks/getAccounts";
 
 
 // categoryId:string,
@@ -33,7 +35,8 @@ export const transactionInputSchema = z.object({
   description: z.string().optional(),
   amount: z.number().optional(),
   isIncome: z.boolean().default(false),
-  categories:z.string()
+  categories:z.string(),
+  accounts:z.string()
 });
 
 export type TransactionFormInput = z.infer<typeof transactionInputSchema>;
@@ -45,6 +48,7 @@ export const RecordForm = ({ transcationId: transcationId }: TransactionFormProp
     transactionId: transcationId ,
   });
   const {data:categories} = useCategories({});
+  const {data:accounts} = useAccounts();
   const form = useForm<TransactionFormInput>({
     mode: "onBlur",
     resolver: zodResolver(transactionInputSchema),
@@ -71,7 +75,8 @@ export const RecordForm = ({ transcationId: transcationId }: TransactionFormProp
         description: transcationData.description ,
         amount: transcationData.amount || 0,
         isIncome:transcationData.isIncome,
-        categories:transcationData.categories.$id
+        categories:transcationData.categories?.$id,
+        accounts:transcationData.accounts?.$id,
       };
       
       console.log(requestValues);
@@ -108,6 +113,21 @@ export const RecordForm = ({ transcationId: transcationId }: TransactionFormProp
           label="description"
           placeholder="Enter description"
         />
+        <FormListInputField
+            name="accounts"
+            control={form.control}
+            label="Account"
+            type="select"
+            placeholder="Select category"
+          >
+            <option>Select Category</option>
+       
+             {accounts?.map((account:Account, index:number) => (
+              <option key={index} value={account.$id!}>
+                {account.AccountName}
+              </option>
+            ))}
+          </FormListInputField>
         <FormListInputField
             name="categories"
             control={form.control}

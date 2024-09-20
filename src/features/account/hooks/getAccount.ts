@@ -20,7 +20,7 @@ export const fetchAccount = async (accountId:string) => {
   const doc = response; // Assuming `response` itself is the document
 
   const account: Account = {
-    accountId: doc.$id,
+    $id: doc.$id,
     users: doc.users,
     AccountType:doc.AccountType,
     InitialBalance:doc.InitialBalance,

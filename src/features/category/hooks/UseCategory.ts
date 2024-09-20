@@ -14,7 +14,7 @@ export const fetchCategories = async (): Promise<Category[]> => {
   );
 
   const families: Category[] = response.documents.map((doc) => ({
-    categoryId: doc.$id, 
+    $id: doc.$id, 
     categoryname: doc.categoryname,  
   }));
 
