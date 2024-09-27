@@ -18,7 +18,7 @@ export const fetchAccounts = async () => {
 
 
   const accounts: Account[] = response.documents.map((doc:any) => ({
-    accountId: doc.$id, 
+    $id: doc.$id, 
     users: doc.users,
     AccountType:doc.AccountType,
     InitialBalance:doc.InitialBalance,

@@ -64,7 +64,7 @@ const DashBoard = () => {
             key={index}
             fill
             className="m-2"
-            onClick={() => handleButtonClick(account.accountId)}
+            onClick={() => handleButtonClick(account.$id)}
           >
            {account.AccountName || "Unknown Account"} ${account.InitialBalance}
 

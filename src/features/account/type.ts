@@ -1,5 +1,5 @@
 export type Account = {
-   accountId:string;
+   $id:string;
    users:string[];
    AccountType?:string;
    InitialBalance?:number;

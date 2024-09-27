@@ -1,3 +1,4 @@
+import { Account } from "../account/type";
 import { Category } from "../category/types";
 
 export type Record = {
@@ -7,5 +8,6 @@ export type Record = {
     description:string;
     amount:number;
     isIncome:boolean;
+    accounts:Account
   };
   
