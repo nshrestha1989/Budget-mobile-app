@@ -115,7 +115,7 @@ export const RecordForm = ({ transcationId: transcationId }: TransactionFormProp
             type="select"
             placeholder="Select category"
           >
-            <option>Select Category</option>
+            <option>Select Account</option>
        
              {accounts?.map((account:Account, index:number) => (
               <option key={index} value={account.$id!}>
