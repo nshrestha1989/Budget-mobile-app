@@ -41,7 +41,12 @@ const DashBoard = () => {
   }
   const getTotalAmount = () => {
     if (!transactionData) return 0; 
-    return transactionData.reduce((total, doc) => total + doc.amount, 0);
+    return transactionData.filter(x=>x.isIncome).reduce((total, doc) => total + doc.amount, 0);
+  };
+
+  const getTotalExpenses = () => {
+    if (!transactionData) return 0; 
+    return transactionData.filter(x=>!x.isIncome).reduce((total, doc) => total + doc.amount, 0);
   };
   return (
     <Page name="Dashboard">
@@ -87,7 +92,7 @@ const DashBoard = () => {
     </div>
  
       <BlockTitle className="m-1 ml-4">Balance Trend</BlockTitle>
-      <BlockTitle className="m-1 ml-4 mb-2">{getTotalAmount()+getInitialBalance()}</BlockTitle>
+      <BlockTitle className="m-1 ml-4 mb-2">{getTotalAmount()+getInitialBalance()-getTotalExpenses()}</BlockTitle>
       <Block strongIos outlineIos className="grid ">
        <LineChart />
       
