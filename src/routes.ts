@@ -11,9 +11,11 @@ import SignupPage from "@/pages/auth/signup";
 import NotFoundPage from './pages/404';
 import HomePage from './pages/home.js';
 import SplashPage from './pages/splash';
-import AccountDetail from './pages/AccountDetail';
+import AccountDetail from './pages/accountDetail';
 import RecordDetail from './pages/RecordDetail';
 import Records from './pages/Records';
+import AccountLists from './pages/accountList';
+import AccountPage from './pages/accounts';
 
 var routes = [
   {
@@ -41,14 +43,17 @@ var routes = [
     component: AuthLandingPage,
   },
   {
-    path: "/request/new/",
+    path: "/account/new/",
     component: AccountDetail,
   },
   {
     path: "/account/:accountId/edit/",
     component: AccountDetail,
   },
-
+  {
+    path: "/accounts/list/",
+    component: AccountPage,
+  },
   {
     path: "/records/list/",
     component: Records,

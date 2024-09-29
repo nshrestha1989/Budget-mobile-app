@@ -44,7 +44,7 @@ export const AccountForm = ({ accountId }: AccountFormProps) => {
     mutationConfig: {
       onSuccess: () => {
         dialog.close();
-        dialog.alert("Successfully saved as draft");
+        dialog.alert("Successfully saved");
         router.navigate("/dashboard/");
       },
       onError: (error: any) => {
@@ -131,7 +131,7 @@ export const AccountForm = ({ accountId }: AccountFormProps) => {
       },
       onError: (error) => {
         dialog.close();
-        dialog.alert("Error saving  draft");
+        dialog.alert("Error saving!!!");
       },
     },
   });

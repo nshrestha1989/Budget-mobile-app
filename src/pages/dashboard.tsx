@@ -62,7 +62,14 @@ const DashBoard = () => {
       <Block strongIos outlineIos className="grid grid-cols-2">
         <BlockTitle className="font-bold">List of Accounts</BlockTitle>
         <div className="relative ">
-        <div className="absolute bottom-3 right-0"> <Icon material="settings" className="left-0" /></div>
+                <div 
+          className="absolute bottom-3 right-0" 
+          onClick={() => {
+            router.navigate("/accounts/list/");  
+          }}
+        > 
+          <Icon material="settings" className="left-0" />
+        </div>
       </div>
       </Block>
 
@@ -79,7 +86,7 @@ const DashBoard = () => {
       ))}
         <Button className="mt-2 mx-2" outline 
          onClick={() => {
-          router.navigate("/request/new/");
+          router.navigate("/account/new/");
         }}
         >
           <Icon material="add_circle" />

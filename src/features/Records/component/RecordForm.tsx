@@ -53,7 +53,7 @@ export const RecordForm = ({ transcationId: transcationId }: TransactionFormProp
     mutationConfig: {
       onSuccess: () => {
         dialog.close();
-        dialog.alert("Successfully saved as draft");
+        dialog.alert("Successfully saved");
         router.navigate("/records/list/");
       },
       onError: (error: any) => {
@@ -181,7 +181,7 @@ export const RecordForm = ({ transcationId: transcationId }: TransactionFormProp
       },
       onError: (error) => {
         dialog.close();
-        dialog.alert("Error saving  draft");
+        dialog.alert("Error saving");
       },
     },
   });
