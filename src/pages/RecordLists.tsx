@@ -1,4 +1,4 @@
-
+import { useAccountStore } from '@/features/account/hooks/accountStore';
 import { EmptyRequestsListItem } from '@/features/Records/component/EmptyRequestListItem';
 import { RequestsListItem } from '@/features/Records/component/RequestListItem';
 import { useTrasactions } from '@/features/Records/hooks/useTransactions';
@@ -8,24 +8,39 @@ import { Fab, FabButton, FabButtons, Icon, List, ListItem } from 'framework7-rea
 
 export default function RecordLists() {
   const router = useRouter();
-    const { data, isPending } =  useTrasactions({});
+  
+  // Get the selected account IDs from Zustand store
+  const { selectedAccountIds } = useAccountStore();
+  
+  // Fetch transactions (data is cached by the API call)
+  const { data: transactions = [], isPending } = useTrasactions({});
+
+  // Filter transactions by selected account IDs
+  const filteredTransactions = selectedAccountIds.length > 0
+    ?  transactions.filter(transaction => selectedAccountIds.includes(transaction?.accounts?.$id))
+    : transactions;
 
   return (
     <div>
-
-
-<List dividersIos  outlineIos strongIos>
+      <List dividersIos outlineIos strongIos>
+        {/* Display placeholder items if transactions are still loading */}
         {isPending &&
           Array(3)
             .fill(0)
             .map((_, index) => <EmptyRequestsListItem key={index} />)}
-        {data?.map((request, index) => (
+
+        {/* Display filtered transactions */}
+        {filteredTransactions.map((request, index) => (
           <RequestsListItem key={index} request={request} />
         ))}
-        {data?.length === 0 && !isPending && (
+
+        {/* Display message if no transactions are found */}
+        {filteredTransactions.length === 0 && !isPending && (
           <ListItem>No requests found</ListItem>
         )}
       </List>
+
+      {/* Floating Action Button for adding new records or making transfers */}
       <Fab position="right-bottom" slot="fixed">
         <Icon ios="f7:plus" md="material:add" />
         <Icon ios="f7:xmark" md="material:close" />
@@ -44,7 +59,6 @@ export default function RecordLists() {
           </FabButton>
         </FabButtons>
       </Fab>
-    
     </div>
-  )
+  );
 }

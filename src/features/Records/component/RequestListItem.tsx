@@ -3,14 +3,6 @@ import { Badge, ListItem } from "framework7-react";
 import { Record } from "../types";
 import { cn, formatDate } from "@/lib/utils";
 
-const requestStatusColorMapping = (status: boolean) => {
-  switch (status) {
-    case true:
-      return "green";
-    default:
-      return "red";
-  }
-};
 
 export const RequestsListItem = ({
   request,

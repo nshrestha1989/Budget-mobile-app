@@ -27,7 +27,7 @@ export const getFamiliesQueryOptions = () => {
   return queryOptions<FamilyMember[] | undefined>({
     queryKey: ['families'],
     queryFn:()=> fetchFamilies(),
-    networkMode: "offlineFirst"
+    // networkMode: "offlineFirst"
   });
 };
 

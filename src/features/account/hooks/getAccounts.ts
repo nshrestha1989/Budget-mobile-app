@@ -33,7 +33,7 @@ export const getAccountsQueryOptions = () => {
   return queryOptions<Account[] | undefined>({
     queryKey: ['accounts'],
     queryFn:()=> fetchAccounts(),
-    networkMode: "offlineFirst"
+    // networkMode: "offlineFirst"
 
   });
 };

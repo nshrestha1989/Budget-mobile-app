@@ -26,7 +26,7 @@ export const getCategoriesQueryOptions = () => {
   return queryOptions<Category[] | undefined>({
     queryKey: ['cateogories'],
     queryFn:()=> fetchCategories(),
-    networkMode: "offlineFirst"
+    // networkMode: "offlineFirst"
   });
 };
 

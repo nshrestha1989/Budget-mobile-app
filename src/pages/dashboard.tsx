@@ -17,6 +17,7 @@ import { useAccounts } from "@/features/account/hooks/getAccounts";
 import { useCategories } from "@/features/category/hooks/UseCategory";
 import { useTrasactions } from "@/features/Records/hooks/useTransactions";
 import PieChart from "@/components/Charts/PieChart";
+import { useAccountStore } from "@/features/account/hooks/accountStore";
 
 
 const DashBoard = () => {
@@ -24,12 +25,19 @@ const DashBoard = () => {
   const { logout } = useAuth();
 
   const { data:accountData=[]} =  useAccounts({});
+  const { selectedAccountIds, addSelectedAccountId, removeSelectedAccountId } = useAccountStore(); 
 
 
 
-  const handleButtonClick = (id: string) => {
-    f7.views.main.router.navigate(`/account/${id}/edit/`);
+
+  const handleAccountSelection = (id: string) => {
+    if (selectedAccountIds.includes(id)) {
+      removeSelectedAccountId(id); // Deselect account
+    } else {
+      addSelectedAccountId(id); // Select account
+    }
   };
+
 
   const handleSignOut = async ()=>{
     const valid = await logout.mutateAsync();
@@ -59,17 +67,16 @@ const DashBoard = () => {
       </Block>
 
       <Block strongIos outlineIos className="grid grid-cols-2 m-0">
-        {accountData.map((account, index) => (
-          <Button
-            key={index}
-            fill
-            className="m-2"
-            onClick={() => handleButtonClick(account.$id)}
-          >
-           {account.AccountName || "Unknown Account"} ${account.InitialBalance}
-
-          </Button>
-        ))}
+      {accountData.map((account) => (
+        <Button
+          key={account.$id}
+          fill
+          className={`m-2 ${selectedAccountIds.includes(account.$id) ? "bg-blue-500 text-white" : "bg-gray-200 text-black"}`} // Conditionally set button color
+          onClick={() => handleAccountSelection(account.$id)}
+        >
+          {account.AccountName || "Unknown Account"} ${account.InitialBalance}
+        </Button>
+      ))}
         <Button className="mt-2 mx-2" outline 
          onClick={() => {
           router.navigate("/request/new/");
