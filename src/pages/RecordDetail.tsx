@@ -14,7 +14,7 @@ export default () => {
       <Navbar backLink="Back">
         <NavTitle>{isNew ? "New" : "Edit"} Record</NavTitle>
       </Navbar>
-      <RecordForm transcationId={transcationId}/>
+      <RecordForm transactionId={transcationId}/>
     </PageLayout>
   );
 };
