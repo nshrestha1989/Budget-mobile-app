@@ -9,6 +9,7 @@ const config = {
       lineHeight: {
         "0": "0",
       },
+   
       colors: {
         bars: {
           DEFAULT: "var(--f7-bars-bg-color)",
@@ -32,6 +33,11 @@ const config = {
           DEFAULT: "var(--muted)",
           foreground: "var(--muted-foreground)",
         },
+      },
+      fontFamily: {
+        sans: ['"Arial"', 'sans-serif'],
+        serif: ['"Georgia"', 'serif'],
+        mono: ['"Courier New"', 'monospace'],
       },
     },
   },

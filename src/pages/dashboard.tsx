@@ -9,6 +9,7 @@ import {
   Block,
   f7,
   Input,
+  Card,
 } from "framework7-react";
 import LineChart from "../components/Charts/LineChart";
 import { useAuth } from "@/features/auth/api/login";
@@ -73,16 +74,27 @@ const DashBoard = () => {
       </div>
       </Block>
 
-      <Block strongIos outlineIos className="grid grid-cols-2 m-0">
+      <Block strongIos outlineIos className="grid grid-cols-2 p-0 m-0">
       {accountData.map((account) => (
-        <Button
-          key={account.$id}
-          fill
-          className={`m-2 ${selectedAccountIds.includes(account.$id) ? "bg-blue-500 text-white" : "bg-gray-200 text-black"}`} // Conditionally set button color
-          onClick={() => handleAccountSelection(account.$id)}
-        >
-          {account.AccountName || "Unknown Account"} ${account.InitialBalance}
-        </Button>
+  <div
+  key={account.$id}
+  onClick={() => handleAccountSelection(account.$id)} 
+
+>
+  <Card
+    className={`rounded-md ${selectedAccountIds.includes(account.$id) ? "bg-blue-500 text-white" : "bg-gray-200 text-black"}`} // Added 'rounded-none' to remove border-radius
+    >
+    <div className="flex flex-col">
+      <span className="text-md pl-2 pt-1 text-md text-gray-800 text-left">{account.AccountName || "Unknown Account"}</span>
+      <span className="mt-1 pl-2 pb-1 text-md text-gray-800 text-left">${account.InitialBalance}</span> 
+    </div>
+  </Card>
+</div>
+
+ 
+
+  
+   
       ))}
         <Button className="mt-2 mx-2" outline 
          onClick={() => {

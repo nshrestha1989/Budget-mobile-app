@@ -15,7 +15,9 @@
   --f7-md-outline: #d2d2d2;
   --f7-searchbar-backdrop-bg-color: none;
 }
-
+body {
+  font-family: theme('fontFamily.serif');
+}
 *,
 ::before,
 ::after {
