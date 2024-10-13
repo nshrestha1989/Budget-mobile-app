@@ -105,7 +105,7 @@ export const AccountForm = ({ accountId }: AccountFormProps) => {
         />
       </List>
       <Block>
-      <Button fill large type="submit" disabled={isPending}>
+      <Button fill large type="submit" disabled={isPending} className="bg-indigo-500">
         Submit
       </Button>
       </Block>

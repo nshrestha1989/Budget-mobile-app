@@ -33,6 +33,7 @@ const config = {
           DEFAULT: "var(--muted)",
           foreground: "var(--muted-foreground)",
         },
+        
       },
       fontFamily: {
         sans: ['"Arial"', 'sans-serif'],

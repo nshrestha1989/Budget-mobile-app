@@ -1,17 +1,30 @@
-import React from 'react';
 import { PageLayout } from "@/components/layout/page-layout";
-import { Navbar, NavTitle,  } from "framework7-react";
+import { Icon, Link, Navbar, NavLeft, NavRight } from "framework7-react";
 import RecordLists from "./RecordLists";
-import { useRouter } from '@/hooks/useRouter';
+import { useRouter } from "@/hooks/useRouter";
 
-const RecordsPage = () => {
+const RecordsPage = (param:any) => {
+  const router = useRouter();
+  function handleClick(): void {
+    router.navigate(`/account/${param?.accountId}/edit/`);
+  }
+  const handleBackClick =()=>{
+    router.navigate(`/`);
+  }
   return (
     <PageLayout requireAuth>
-      <Navbar backLink="Back" >
-        <NavTitle>Records</NavTitle>
-      </Navbar>
+      <Navbar>
+      <NavLeft backLink="true" backLinkForce={true} onBackClick={handleBackClick}>
+        
+       <Link  icon="material:Edi" panelOpen="right"></Link>
+      </NavLeft>
+      <NavRight>
+   {param?.accountId && <Link  icon="material:menu" panelOpen="right" onClick={()=>handleClick()}> <Icon material="edit"  /></Link>}
+  </NavRight>
+  </Navbar>
       <RecordLists />
     </PageLayout>
+
   );
 };
 

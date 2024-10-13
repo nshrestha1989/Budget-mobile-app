@@ -35,7 +35,7 @@ export const RecordForm = ({ transactionId }: TransactionFormProps) => {
   const dialog = useDialog();
   const router = useRouter();
 
-  const { selectedAccountIds } = useAccountStore();
+  const { selectedAccountId } = useAccountStore();
   const { data: transcationData, isLoading } = useTrasaction({
     transactionId: transactionId,
   });
@@ -48,7 +48,7 @@ export const RecordForm = ({ transactionId }: TransactionFormProps) => {
     mode: "onBlur",
     resolver: zodResolver(transactionInputSchema),
     defaultValues: {
-      accounts: selectedAccountIds[0] || "",  
+      accounts: selectedAccountId || "",  
     },
   });
   const { mutate: saveTransaction, isPending } = useSaveTransaction({
@@ -56,7 +56,7 @@ export const RecordForm = ({ transactionId }: TransactionFormProps) => {
       onSuccess: () => {
         dialog.close();
         dialog.alert("Successfully saved");
-        router.navigate("/records/list/");
+        router.navigate("/dashboard/");
       },
       onError: (error: any) => {
         console.error("Error creating transaction:", error);
@@ -123,7 +123,7 @@ const TransactionTab = ({ form, accounts, categories, onSubmit, isPending, trans
     <form onSubmit={onSubmit}>
       <TransactionFormFields form={form} accounts={accounts} categories={categories} />
       <Block>
-        <Button fill large type="submit" disabled={isPending}>
+        <Button fill large type="submit" disabled={isPending} className="bg-indigo-500">
           Submit
         </Button>
       </Block>
@@ -239,7 +239,7 @@ const DeleteComponent = ({ transactionId }: DeleteComponentProps) => {
 
   return (
     <Block>
-      <Button fill large type="button" color="red" onClick={handleDelete}>
+      <Button fill large type="button" color="red" onClick={handleDelete} className="bg-red-500">
         Delete
       </Button>
     </Block>

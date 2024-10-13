@@ -8,20 +8,18 @@ import { Fab, FabButton, FabButtons, Icon, List, ListItem } from 'framework7-rea
 
 export default function RecordLists() {
   const router = useRouter();
-  
-  // Get the selected account IDs from Zustand store
-  const { selectedAccountIds } = useAccountStore();
-  
-  // Fetch transactions (data is cached by the API call)
+  const accountIdParam = router.currentRoute.params;
+  const accountId = accountIdParam.accountId;
   const { data: transactions = [], isPending } = useTrasactions({});
 
-  // Filter transactions by selected account IDs
-  const filteredTransactions = selectedAccountIds.length > 0
-    ?  transactions.filter(transaction => selectedAccountIds.includes(transaction?.accounts?.$id))
+  const filteredTransactions = accountId
+    ?  transactions.filter(transaction => accountId==transaction?.accounts?.$id)
     : transactions;
 
   return (
     <div>
+      
+       
       <List dividersIos outlineIos strongIos>
         {/* Display placeholder items if transactions are still loading */}
         {isPending &&

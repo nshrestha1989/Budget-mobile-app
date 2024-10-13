@@ -59,6 +59,10 @@ var routes = [
     component: Records,
   },
   {
+    path: "/records/list/:accountId",
+    component: Records,
+  },
+  {
     path: "/records/new/",
     component: RecordDetail,
   },

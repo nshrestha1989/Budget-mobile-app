@@ -179,7 +179,7 @@ export const SignupForm = ({ onSuccess }: { onSuccess?: () => void }) => {
       </Form>
       <Block>
         <div className="flex flex-col gap-4">
-          <Button large fill preloader onClick={submitForm}>
+          <Button large fill preloader onClick={submitForm} className="bg-indigo-500">
             SUBMIT
           </Button>
           <Button large fill preloader bgColor="red" href="/auth/">

@@ -14,9 +14,7 @@ export const RequestsListItem = ({
 
   return (
     <ListItem link={`/records/${request.transactionId}/edit/`} className={cn(className)}
-
     >
-      
       <div>
       <div className="text-muted">
           <div>Date: {formatDate(request.transactionDate)}</div>
