@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import { f7ready, App, View, Views, Toolbar, Link } from "framework7-react";
+import { f7ready, App, View, Views, Toolbar, Link, Icon } from "framework7-react";
 
 
 import { QueryClientProvider } from "../src/lib/react-query";
@@ -15,7 +15,7 @@ const AppContainer = () => {
     name: "FamilyBudget", 
     theme: "auto", // Automatic theme detection
     colors: {
-      primary: "#3b0764",
+      primary: "#181717",
     },
     // App routes
     routes: routes,
@@ -26,29 +26,49 @@ const AppContainer = () => {
 
   return (
     <QueryClientProvider>
-      <App {...f7params}>
-        <MenuPanel />
+    <App {...f7params}>
+  <MenuPanel />
 
-        <Views tabs className="safe-areas">
-          {/* Tabbar for switching views-tabs */}
-          <Toolbar tabbar icons bottom>
-            <Link tabLink="#view-home" tabLinkActive iconIos="f7:house_fill" iconMd="material:dashboard" text="Dashboard" />
-            
-            <Link tabLink="#view-family" iconIos="f7:square_list_fill" iconMd="material:diversity_3" text="Todo" />
-            <Link tabLink="#view-settings" iconIos="f7:gear" iconMd="material:settings" text="Settings" />
-          </Toolbar>
+  <Views tabs className="safe-areas">
+    {/* Tabbar for switching views-tabs */}
+    <Toolbar tabbar icons bottom>
+      <Link 
+        tabLink="#view-home" 
+        tabLinkActive 
+        iconIos="f7:house_fill" 
+        iconMd="material:dashboard" 
+        text="Dashboard" 
+      />
+      <Link 
+        tabLink="#view-new-record" 
+        text="" 
+        iconMd = "material:add_circle"
+        iconSize = "54px"     
+        iconColor="blue"
+        className="mt-6"
+       
+      >
+        
+        
+      </Link>
+      <Link 
+        tabLink="#view-settings" 
+        iconIos="f7:gear" 
+        iconMd="material:settings" 
+        text="Settings" 
+      />
+    </Toolbar>
 
-          {/* Your main view/tab, should have "view-main" class. It also has "tabActive" prop */}
-          <View id="view-home" main tab tabActive url="/" />
+    {/* Dashboard View */}
+    <View id="view-home" main tab tabActive url="/dashboard/" />
 
-          {/* Catalog View */}
-          <View id="view-family" name="family" tab url="/family/" />
+    {/* New Record View */}
+    <View id="view-new-record" name="new-record" tab url="/records/new/" />
 
-          {/* Settings View */}
-          <View id="view-settings" name="settings" tab url="/settings/" />
-
-        </Views>
-      </App>
+    {/* Settings View */}
+    <View id="view-settings" name="settings" tab url="/settings/" />
+  </Views>
+</App>
      
     </QueryClientProvider>
   );

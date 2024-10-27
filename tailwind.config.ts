@@ -36,7 +36,7 @@ const config = {
         
       },
       fontFamily: {
-        sans: ['"Arial"', 'sans-serif'],
+        sans: ['Roboto', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', '"Helvetica Neue"', 'Arial', 'sans-serif'],
         serif: ['"Georgia"', 'serif'],
         mono: ['"Courier New"', 'monospace'],
       },

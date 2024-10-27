@@ -7,70 +7,53 @@ const PieChart = () => {
   const { data: transactionData, isPending } = useTrasactions({});
 
 
-   // Get current date and the start of the week (Monday)
-   const today = new Date();
-   const startOfMonday = startOfWeek(today, { weekStartsOn: 1 }); // weekStartsOn: 1 makes it Monday
-
-  // Check if data is available and categorize expenses by category
   const categoryTotals = (transactionData || [])
     .filter(doc => {
-      const transactionDate = new Date(doc.transactionDate);
-      return transactionDate >= startOfMonday && transactionDate <= today && !doc.isIncome;
-    }) // Only consider expenses
+      const transactionDate = !doc.isIncome && new Date(doc.transactionDate);
+      return transactionDate;
+    }) 
     .reduce((acc, doc) => {
-      const category = doc.categories.categoryname || 'Uncategorized'; // Handle uncategorized transactions
+      const category = doc.categories.categoryname || 'Uncategorized'; 
       acc[category] = (acc[category] || 0) + doc.amount;
       return acc;
     }, {} as Record<string, number>);
 
-  // Prepare data for the pie chart
+
   const pieData = Object.entries(categoryTotals).map(([category, total]) => ({
     value: total,
     name: category,
   }));
 
-  // Calculate total expenses for display
   const totalExpenses = Object.values(categoryTotals).reduce((sum, value) => sum + value, 0);
 
-  // Prepare chart options
   const options = {
     
     tooltip: {
-      trigger: 'item',
+      trigger: 'item'
     },
     legend: {
       top: '5%',
-      left: 'center',
+      left: 'center'
     },
     series: [
       {
-        name: 'Expense Categories',
+     
         type: 'pie',
-        top:'5%',
-        radius: ['40%', '70%'], // Updated radius to match the new structure
+        radius: ['40%', '70%'],
         avoidLabelOverlap: false,
-        padAngle: 5,
-        itemStyle: {
-          borderRadius: 10,
-          borderColor: '#fff',
-          borderWidth: 2
-        },
         label: {
-          show: true,
-          position: 'center',
-          formatter: `$${totalExpenses}`, // Display total expenses in the center
-          fontSize: '20', // Adjust the font size as needed
-          fontWeight: 'bold', // Optional: make it bold
+          show: false,
+          position: 'center'
         },
         emphasis: {
           label: {
             show: true,
             fontSize: 40,
-            fontWeight: 'bold',
-          },
+            fontWeight: 'bold'
+          }
         },
         labelLine: {
-          show: false,
+          show: false
         },
         data: pieData.length > 0 ? pieData : [ // Ensure there's data to display
           { value: 0, name: 'No Data' }

@@ -2,6 +2,7 @@ import { queryOptions, useQuery } from '@tanstack/react-query';
 import { QueryConfig } from '@/lib/react-query';
 import { database } from '@/lib/API/appwrite/appwrite';
 import { Record } from '../types';
+import { Query } from 'appwrite';
 
 const {
   VITE_DATABASE_ID,
@@ -11,7 +12,10 @@ export const fetchCategories = async (): Promise<Record[]|undefined> => {
 
  let response = await database.listDocuments(
   VITE_DATABASE_ID!,
-  VITE_TRANSACTION_COLLECTION_ID!
+  VITE_TRANSACTION_COLLECTION_ID!,
+  [
+    Query.orderDesc('transactionDate'),
+]
 );
   
   const record: Record[] = response.documents.map((doc) => ({

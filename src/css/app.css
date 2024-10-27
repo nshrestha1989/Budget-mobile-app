@@ -14,9 +14,11 @@
   --f7-checkbox-active-color: var(--f7-color-teal);
   --f7-md-outline: #d2d2d2;
   --f7-searchbar-backdrop-bg-color: none;
+
 }
 body {
-  font-family: theme('fontFamily.serif');
+  font-family: theme('fontFamily.sans');
+
 }
 *,
 ::before,

@@ -7,11 +7,13 @@ import { NavTitle, Navbar } from "framework7-react";
 export default () => {
   const router = useRouter();
   const transcationIdParam = router.currentRoute.params;
-  const transcationId = transcationIdParam.transcationId;
+  const transcationId = transcationIdParam?.transcationId;
   const isNew = !transcationId;
+
+
   return (
     <PageLayout requireAuth>
-      <Navbar backLink="Back">
+      <Navbar  backLink={true} >
         <NavTitle>{isNew ? "New" : "Edit"} Record</NavTitle>
       </Navbar>
       <RecordForm transactionId={transcationId}/>
