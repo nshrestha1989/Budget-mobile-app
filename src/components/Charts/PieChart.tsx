@@ -13,7 +13,7 @@ const PieChart = () => {
       return transactionDate;
     }) 
     .reduce((acc, doc) => {
-      const category = doc.categories.categoryname || 'Uncategorized'; 
+      const category = doc?.categories?.categoryname || 'Uncategorized'; 
       acc[category] = (acc[category] || 0) + doc.amount;
       return acc;
     }, {} as Record<string, number>);

@@ -139,14 +139,17 @@ type TransactionFormFieldsProps = {
 };
 
 const TransactionFormFields = ({ form, accounts, categories }: TransactionFormFieldsProps) => (
-  <List dividersIos={true} strongIos={true} strongMd={true} outlineIos={true}>
+  <><List >
     <FormListInputField
       control={form.control}
       name="amount"
-      label="Amount"
-      placeholder="Enter Amount"
+      label=""
+   
       valueAs="number"
     />
+  </List>
+  <List strongMd={true} >
+    
     <FormListInputField
       control={form.control}
       name="description"
@@ -192,7 +195,9 @@ const TransactionFormFields = ({ form, accounts, categories }: TransactionFormFi
       }}
     />
   </List>
+  </>
 );
+
 
 type TransactionToolbarProps = {
   isIncomeTab: boolean;

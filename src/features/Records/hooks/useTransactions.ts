@@ -1,24 +1,38 @@
 import { queryOptions, useQuery } from '@tanstack/react-query';
 import { QueryConfig } from '@/lib/react-query';
-import { database } from '@/lib/API/appwrite/appwrite';
+import useFetchCollection, { database } from '@/lib/API/appwrite/appwrite';
 import { Record } from '../types';
 import { Query } from 'appwrite';
+
 
 const {
   VITE_DATABASE_ID,
   VITE_TRANSACTION_COLLECTION_ID
 } =import.meta.env;
-export const fetchCategories = async (): Promise<Record[]|undefined> => {
+export const fetchDocuments = async (): Promise<Record[]|undefined> => {
 
- let response = await database.listDocuments(
-  VITE_DATABASE_ID!,
-  VITE_TRANSACTION_COLLECTION_ID!,
-  [
-    Query.orderDesc('transactionDate'),
-]
-);
-  
-  const record: Record[] = response.documents.map((doc) => ({
+
+  let response= await useFetchCollection(
+    VITE_DATABASE_ID!,
+    VITE_TRANSACTION_COLLECTION_ID!,
+    undefined, // Fetch all documents, no specific documentId
+    "transactionDate", // Order by createdAt field
+    "DESC", // Descending order
+    "status=active", // Filter for active documents
+    10, // Limit to 10 documents
+    0 // No offset (start from the beginning)
+  ) ;
+//  let response = await database.listDocuments(
+//   VITE_DATABASE_ID!,
+//   VITE_TRANSACTION_COLLECTION_ID!,
+//   [
+//     Query.orderDesc('transactionDate'),
+// ]
+// );
+console.log(response)
+const documents = Array.isArray(response) ? response : response.documents;
+
+  const record: Record[] = documents.map((doc: { $id: any; categories: any; transactionDate: any; description: any; amount: any; isIncome: any; accounts: any; }) => ({
     transactionId:doc.$id,
     categories: doc.categories, 
     transactionDate: doc.transactionDate, 
@@ -36,7 +50,7 @@ export const fetchCategories = async (): Promise<Record[]|undefined> => {
 export const getCategoriesQueryOptions = () => {
   return queryOptions<Record[] | undefined>({
     queryKey: ['transactions'],
-    queryFn:()=> fetchCategories(),
+    queryFn:()=> fetchDocuments(),
     // networkMode: "offlineFirst"
   });
 };

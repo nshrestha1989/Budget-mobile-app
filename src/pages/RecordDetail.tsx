@@ -14,7 +14,7 @@ export default () => {
   return (
     <PageLayout requireAuth>
       <Navbar  backLink={true} >
-        <NavTitle>{isNew ? "New" : "Edit"} Record</NavTitle>
+        <NavTitle>{isNew ? "Add" : "Edit"} Record</NavTitle>
       </Navbar>
       <RecordForm transactionId={transcationId}/>
     </PageLayout>

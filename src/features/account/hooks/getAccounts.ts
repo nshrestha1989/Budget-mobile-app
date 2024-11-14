@@ -1,6 +1,6 @@
 import { queryOptions, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { MutationConfig, QueryConfig } from '@/lib/react-query';
-import { database } from '@/lib/API/appwrite/appwrite';
+import useFetchCollection, { database } from '@/lib/API/appwrite/appwrite';
 import { Account } from '../type';
 
 
@@ -10,14 +10,15 @@ const {
   VITE_ACCOUNT_COLLECTION_ID
 } =import.meta.env;
 export const fetchAccounts = async () => {
-  const response = await database.listDocuments(
+  const response =   await useFetchCollection(
     VITE_DATABASE_ID!,
     VITE_ACCOUNT_COLLECTION_ID!,
     
   );
 
+  const documents = Array.isArray(response) ? response : response.documents;
 
-  const accounts: Account[] = response.documents.map((doc:any) => ({
+  const accounts: Account[] = documents.map((doc:any) => ({
     $id: doc.$id, 
     users: doc.users,
     AccountType:doc.AccountType,

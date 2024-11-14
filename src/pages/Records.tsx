@@ -14,9 +14,9 @@ const RecordsPage = (param:any) => {
   return (
     <PageLayout requireAuth>
       <Navbar>
-      <NavLeft backLink="true" backLinkForce={true} onBackClick={handleBackClick}>
+      <NavLeft backLink="back" backLinkForce={true} onBackClick={handleBackClick}>
         
-       <Link  icon="material:Edi" panelOpen="right"></Link>
+       <Link  icon="material:Edit" panelOpen="right"></Link>
       </NavLeft>
       <NavRight>
    {param?.accountId && <Link  icon="material:menu" panelOpen="right" onClick={()=>handleClick()}> <Icon material="edit"  /></Link>}

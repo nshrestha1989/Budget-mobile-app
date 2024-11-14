@@ -10,8 +10,10 @@ type AuthState = {
   forgotPasswordErrorMessage?: string | null;
   verifyCodeErrorMessage?: string | null;
   token: string;
+  sessionId: string; // Add sessionId to your state
   createNewPasswordErrorMessage?: string | null;
 };
+
 type AuthActions = {
   setIsAuthenticated: (isAuthenticated: boolean) => void;
   setLoginError: (LoginError: string) => void;
@@ -20,8 +22,8 @@ type AuthActions = {
   setForgotPasswordErrorMessage: (message?: string) => void;
   setVerifyCodeErrorMessage: (error?: string) => void;
   setToken: (token: string) => void;
+  setSessionId: (sessionId: string) => void; // Add action for sessionId
   setCreateNewPasswordErrorMessage: (error?: string) => void;
-
 };
 
 export const useAuthStore = create<AuthState & AuthActions>()(
@@ -29,12 +31,12 @@ export const useAuthStore = create<AuthState & AuthActions>()(
     persist(
       (set, get) => ({
         user: null,
-        isReady: false,
         isAuthenticated: null,
         forgotPasswordMessage: null,
         forgotPasswordErrorMessage: null,
         verifyCodeErrorMessage: null,
         token: "",
+        sessionId: "", // Initialize sessionId
         setUserData(user) {
           set({
             user: user,
@@ -45,7 +47,7 @@ export const useAuthStore = create<AuthState & AuthActions>()(
         setIsAuthenticated(isAuthenticated) {
           set({ isAuthenticated });
           if (!isAuthenticated) {
-            set({ user: null });
+            set({ user: null, sessionId: "", token: "" }); // Clear sessionId and token on logout
           }
         },
         setLoginError(error) {
@@ -71,12 +73,14 @@ export const useAuthStore = create<AuthState & AuthActions>()(
         setToken(token) {
           set({ token });
         },
+        setSessionId(sessionId) {
+          set({ sessionId });
+        },
         setCreateNewPasswordErrorMessage: (error) => set({ createNewPasswordErrorMessage: error }),
-
       }),
       {
         name: "authStore",
-        partialize: (state) => ({ user: state.user, token: state.token }),
+        partialize: (state) => ({ user: state.user, token: state.token, sessionId: state.sessionId }),
       },
     ),
   ),

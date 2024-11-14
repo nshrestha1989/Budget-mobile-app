@@ -1,6 +1,6 @@
 import { queryOptions, useQuery } from '@tanstack/react-query';
 import { QueryConfig } from '@/lib/react-query';
-import { database } from '@/lib/API/appwrite/appwrite';
+import useFetchCollection, { database } from '@/lib/API/appwrite/appwrite';
 import { Category } from '../types';
 
 const {
@@ -8,12 +8,12 @@ const {
   VITE_CATEGORIES_COLLECTION_ID
 } =import.meta.env;
 export const fetchCategories = async (): Promise<Category[]> => {
-  const response = await database.listDocuments(
+  const response = await useFetchCollection(
     VITE_DATABASE_ID!,
     VITE_CATEGORIES_COLLECTION_ID!
   );
-
-  const categories: Category[] = response.documents.map((doc) => ({
+  const documents = Array.isArray(response) ? response : response.documents;
+  const categories: Category[] = documents.map((doc: { $id: any; categoryname: any; }) => ({
     $id: doc.$id, 
     categoryname: doc.categoryname,  
   }));

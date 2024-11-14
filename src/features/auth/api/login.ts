@@ -24,7 +24,8 @@ export const useAuth = () => {
     createNewPasswordErrorMessage,
     setIsAuthenticated,
     setLoginError,
-    setUserData
+    setUserData,
+    setSessionId,
   } = useAuthStore();
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
 
@@ -37,6 +38,8 @@ export const useAuth = () => {
       login;
       if (data.$id) {
         setUserData(data);
+        setIsAuthenticated(true);
+        setSessionId(data.$id);
       } else {
         setLoginError("Error");
       }
@@ -53,6 +56,7 @@ export const useAuth = () => {
     mutationFn: async () => {
       setUserData(null);
       setIsAuthenticated(false);
+       setSessionId("");
       await account.deleteSession('current');
       
     },
