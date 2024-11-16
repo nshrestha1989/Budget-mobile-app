@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 import { YesNoOptions } from "@/types/common";
-import { Button, Icon, Input, ListInput, ListItem } from "framework7-react";
-import React, { useEffect, useState } from "react";
+import { Button, Icon, Input, ListInput, ListItem ,f7} from "framework7-react";
+import React, { useEffect, useState,useRef } from "react";
 import {
   Control,
   Controller,
@@ -14,6 +14,12 @@ import {
   useFormState,
   useWatch,
 } from "react-hook-form";
+import Keypad from "./Keypad";
+
+
+import "../../../node_modules/framework7/framework7-bundle.min.css"; // Assuming custom styles or from a package
+
+import "../../../node_modules/framework7-plugin-keypad/framework7-keypad.min.css"; // Assuming custom styles or from a package
 
 const Form = FormProvider;
 
@@ -57,7 +63,7 @@ const useFormField = () => {
   };
 };
 
-export type ValueAsType = "number" | "boolean";
+export type ValueAsType = "number" | "boolean"|"numpad";
 const coerceValue = (type: ValueAsType, value: any) => {
   if (type === "number") {
     // Allow string to pass through if it's an incomplete decimal input (e.g., "3.")
@@ -92,6 +98,24 @@ const FormListInputField = <
   }) => {
   const isFile = props.type === "file";
   const isDatePicker = props.type === "datepicker";
+  const isCalculator =  props.type === "calculator";
+  const isNumpad  =  props.type === "numpad";
+  const numpadRef = useRef<any>(null);
+  const handleOpenKeypad = () => {
+    let  numpad = (f7 as any).keypad.create({
+       inputEl: numpadRef.current,
+       valueMaxLength: 2,
+        dotButton: false,
+        openIn:"auto",
+        backdrop:false,
+        type:"calculator",
+        inline:true,
+        toolbar:false
+   
+     });
+ 
+     numpad.open();
+   };
   return (
     <FormField
       control={control}
@@ -113,8 +137,10 @@ const FormListInputField = <
                 <div className="mr-2">{props.prefix}</div>
               )}
               <Input
+              
                 {...props}
                 type={props.type || "text"}
+                ref={numpadRef}
                 calendarParams={
                   isDatePicker
                     ? {
@@ -126,6 +152,7 @@ const FormListInputField = <
                       }
                     : undefined
                 }
+
                 value={value}
                 disabled={field.disabled}
                 className={cn(
@@ -145,6 +172,12 @@ const FormListInputField = <
                     field.onChange(dateFormatted);
                   }
                 }}
+                onInput={()=>{
+                  if(isCalculator){
+                   
+                   handleOpenKeypad()}
+                  
+               }}
                 onChange={(e) => {
                   let value = e.target.value;
                   if (valueAs && !isFile) {
@@ -155,6 +188,8 @@ const FormListInputField = <
                 onBlur={field.onBlur}
                 name={field.name}
               />
+            
+           
               {isDatePicker && (
                 <Icon
                   ios="material:calendar_month"

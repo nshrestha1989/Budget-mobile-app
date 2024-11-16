@@ -49,6 +49,7 @@
     "flexsearch": "^0.7.43",
     "framework7": "^8.3.3",
     "framework7-icons": "^5.0.5",
+    "framework7-plugin-keypad": "^7.0.0",
     "framework7-react": "^8.3.3",
     "http-proxy-middleware": "^3.0.0",
     "input-otp": "^1.2.4",

@@ -144,8 +144,8 @@ const TransactionFormFields = ({ form, accounts, categories }: TransactionFormFi
       control={form.control}
       name="amount"
       label=""
-   
-      valueAs="number"
+      type="calculator"
+      valueAs="numpad"
     />
   </List>
   <List strongMd={true} >

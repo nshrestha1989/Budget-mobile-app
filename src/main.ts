@@ -1,7 +1,7 @@
 // Import React and ReactDOM
 import React from "react";
 import { createRoot } from "react-dom/client";
-
+import Framework7PluginKeypad from "framework7-plugin-keypad"
 // Import Framework7
 import Framework7 from "framework7/lite/bundle";
 
@@ -20,7 +20,7 @@ import App from "./app";
 
 // Init F7 React Plugin
 Framework7.use(Framework7React);
-
+Framework7.use(Framework7PluginKeypad);
 // Register swiper.js
 import { register } from "swiper/element/bundle";
 register();
