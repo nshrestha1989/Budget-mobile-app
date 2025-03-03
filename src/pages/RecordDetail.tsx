@@ -1,22 +1,20 @@
 import { PageLayout } from "@/components/layout/page-layout";
-
 import { RecordForm } from "@/features/Records/component/RecordForm";
-import { useRouter } from "@/hooks/useRouter";
 import { NavTitle, Navbar } from "framework7-react";
 
-export default () => {
-  const router = useRouter();
-  const transcationIdParam = router.currentRoute.params;
-  const transcationId = transcationIdParam?.transcationId;
-  const isNew = !transcationId;
+interface Props {
+  transactionId?: string; 
+}
 
-
+const RecordPage: React.FC<Props> = ({ transactionId }) => {
   return (
     <PageLayout requireAuth>
-      <Navbar  backLink={true} >
-        <NavTitle>{isNew ? "Add" : "Edit"} Record</NavTitle>
+      <Navbar >
+        <NavTitle>{!transactionId ? "Add" : "Edit"} Record</NavTitle>
       </Navbar>
-      <RecordForm transactionId={transcationId}/>
+      <RecordForm transactionId={transactionId} />
     </PageLayout>
   );
 };
+
+export default RecordPage;

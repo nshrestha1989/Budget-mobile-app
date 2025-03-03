@@ -15,12 +15,16 @@
   --f7-md-outline: #d2d2d2;
   --f7-searchbar-backdrop-bg-color: none;
 
+
 }
 body {
   font-family: theme('fontFamily.sans');
 
 }
 *,
+/* .page {
+  background-color:rgb(219, 207, 207);
+} */
 ::before,
 ::after {
   border-color: var(--f7-list-outline-border-color);

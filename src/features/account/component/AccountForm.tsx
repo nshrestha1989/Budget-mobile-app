@@ -82,8 +82,8 @@ export const AccountForm = ({ accountId }: AccountFormProps) => {
 
   return (
     <>
-    <form onSubmit={form.handleSubmit(submit)}>
-      <List dividersIos={true} strongIos={true} strongMd={true} outlineIos={true}>
+    <form onSubmit={form.handleSubmit(submit)} >
+      <List dividersIos={true} strongIos={true} strongMd={true} outlineIos={true} >
         <FormListInputField
           control={form.control}
           name="AccountName"

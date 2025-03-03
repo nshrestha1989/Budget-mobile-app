@@ -32,7 +32,7 @@ export const useAuth = () => {
   const login = useMutation({
     mutationFn: loginWithEmailPassword,
     onMutate: () => {
-      setLoginError("Error");
+      setLoginError("");
     },
     onSuccess: (data) => {
       login;

@@ -9,12 +9,9 @@ import DynamicRoutePage from './pages/dynamic-route';
 import LoginPage from "@/pages/auth/login";
 import SignupPage from "@/pages/auth/signup";
 import NotFoundPage from './pages/404';
-import HomePage from './pages/home.js';
 import SplashPage from './pages/splash';
-import AccountDetail from './pages/accountDetail';
+import AccountDetail from './pages/AccountDetail';
 import RecordDetail from './pages/RecordDetail';
-import Records from './pages/Records';
-import AccountLists from './pages/accountList';
 import AccountPage from './pages/accounts';
 
 var routes = [
@@ -54,14 +51,7 @@ var routes = [
     path: "/accounts/list/",
     component: AccountPage,
   },
-  {
-    path: "/records/list/",
-    component: Records,
-  },
-  {
-    path: "/records/list/:accountId",
-    component: Records,
-  },
+
   {
     path: "/records/new/",
     component: RecordDetail,

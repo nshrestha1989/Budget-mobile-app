@@ -1,27 +1,24 @@
 import { useState } from "react";
-import { List, ListItem, Button, Block, BlockTitle } from "framework7-react";
+import { List, ListItem, Button, Block, BlockTitle, Popup, View, Page, Navbar, NavRight, Link } from "framework7-react";
 
 import { useRouter } from "@/hooks/useRouter";
 import { RequestsListItem } from "@/features/Records/component/RequestListItem";
 import { useTrasactions } from "@/features/Records/hooks/useTransactions";
+import RecordLists from "./RecordLists";
+import PopupContainer from "@/components/ui/PopUpConatainer";
+import { Record } from "@/features/Records/types";
 
 export const RequestsListLimited = ({
   className,
 }: {
   className?: HTMLDivElement["className"];
 }) => {
-  const [showMore, setShowMore] = useState(false);
-  const router = useRouter();
-  const { data: transactions = [], isPending } = useTrasactions({});
-  const limitedRequests = showMore ? transactions : transactions.slice(0, 3);
 
-  const handleShowMore = () => {
-    router.navigate("/records/list/");
-  };
+  const { data: transactions = [] as Record[]} = useTrasactions({});
+  const limitedRequests =  transactions.slice(0, 3);
+  const [popupOpened, setPopupOpened] = useState(false);
 
-
- 
-  return (<Block strong  inset   > 
+  return (<><Block strong  inset   > 
     
     
       <List >
@@ -30,14 +27,28 @@ export const RequestsListLimited = ({
           <RequestsListItem key={index} request={request} />
         ))}
       </List>
+       {transactions.length > 3 && (
 
-      {/* Show "Show More" button if there are more than 3 requests */}
-      {transactions.length > 3 && (
-        <p  onClick={handleShowMore} className="text-right mr-4 text-blue-600/75">
+<>
+<p   onClick={() => setPopupOpened(true)} className="text-right mr-4 text-blue-600/75">
           Show More
         </p>
-      )}
-    
+        <Popup
+          opened={popupOpened}
+          onPopupClosed={() => setPopupOpened(false)}
+        >
+          <Page>
+            <Navbar title="Record List">
+              <Link popupClose>Close</Link>
+            </Navbar>
+            <RecordLists transactions={transactions}/>
+          </Page>
+        </Popup></>
+   
+)}
     </Block>
+ 
+    
+    </>
   );
 };

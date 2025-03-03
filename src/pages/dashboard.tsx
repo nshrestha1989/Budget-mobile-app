@@ -8,6 +8,8 @@ import {
   Block,
   Input,
   Card,
+  Popup,
+  Link,
 } from "framework7-react";
 import LineChart from "../components/Charts/LineChart";
 import { useAuth } from "@/features/auth/api/login";
@@ -18,16 +20,24 @@ import PieChart from "@/components/Charts/PieChart";
 
 import { RequestsListLimited } from "./RequestsListLimited";
 import { SwiperRef } from "@/swiper";
+import RecordLists from "./RecordLists";
 
 const DashBoard = () => {
   const router = useRouter();
   const { logout } = useAuth();
+  const [popupOpened, setPopupOpened] = useState(false);
+  const [AccountClickedpopupOpened, setPopupOpenedAccountClicked] = useState(false);
+
 
   const { data: accountData = [] } = useAccounts({});
+  const { data: transactions = [] } = useTrasactions({});
+  const [transactionByIdData ,setTransactionByIdData] = useState(transactions);
 
   const handleAccountSelection = (accountId: string) => {
-    router.navigate(`/records/list/${accountId}`);
-  };
+    setPopupOpenedAccountClicked(true)
+    let filterData = transactions.filter(x=> x.accounts.$id == accountId)
+    setTransactionByIdData(filterData);
+    };
 
   const handleSignOut = async () => {
     const valid = await logout.mutateAsync();
@@ -56,9 +66,13 @@ const DashBoard = () => {
       swiperRef.current.initialize();
     }
   }, []);
-  return (
-    <Page name="Dashboard" className="bg-slate-200	">
-      <div className="flex justify-end bg-green-400 pb-2 pr-2 pt-2">
+
+
+  return (<>
+ 
+    <Page name="Dashboard" className="!bg-slate-200	">
+      <div className="bg-green-400 ">
+      <div className="flex justify-end pb-2 pr-2 pt-2">
         <Icon material="notifications" color="white" className="mr-2" />
         <span onClick={() => alert("Create new fucntion")}>
           {" "}
@@ -66,7 +80,7 @@ const DashBoard = () => {
         </span>
       </div>
 
-      <div className="bg-green-400 pb-12">
+      <div className="pb-12">
         <Block className="m-0 grid grid-cols-2 p-0 ">
           {accountData.map((account) => (
             <div
@@ -117,7 +131,7 @@ const DashBoard = () => {
           </div>
         </Block>
       </div>
-
+      </div>
       <div className="-mt-12 w-full  [&_swiper-container_swiper-slide]:w-[90%] [&_swiper-container_swiper-slide]:m-0">
         <swiper-container slides-per-view="auto" >
           <swiper-slide>
@@ -177,10 +191,22 @@ const DashBoard = () => {
 </BlockTitle>
         <LineChart />  
 
-        <p  onClick={() => {
-    router.navigate("/records/list/");}} className="text-right mr-4 text-blue-600/75">
+        <p   onClick={() => setPopupOpened(true)} className="text-right mr-4 text-blue-600/75">
           Show More
         </p>
+
+     
+        <Popup
+          opened={popupOpened}
+          onPopupClosed={() => setPopupOpened(false)}
+        >
+          <Page>
+            <Navbar title="Records">
+              <Link popupClose>Close</Link>
+            </Navbar>
+            {transactionData && <RecordLists transactions={transactionData}/>}
+          </Page>
+        </Popup>
       </Block>
       <Block strong inset>
         <PieChart />
@@ -203,6 +229,18 @@ const DashBoard = () => {
         </Button>
       </Block>
     </Page>
+    <Popup
+          opened={AccountClickedpopupOpened}
+          onPopupClosed={() => setPopupOpenedAccountClicked(false)}
+        >
+          <Page>
+            <Navbar title="Records">
+              <Link popupClose>Close</Link>
+            </Navbar>
+          <RecordLists transactions={transactionByIdData} />
+          </Page>
+        </Popup>
+    </>
   );
 };
 

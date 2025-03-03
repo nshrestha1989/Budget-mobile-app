@@ -8,6 +8,7 @@ import { AppProps } from "framework7-react/components/app";
 import MenuPanel from "../src/components/menu-panels";
 import 'regenerator-runtime/runtime';
 import routes from "./routes";
+import { useAuthStore } from "./features/auth/hooks/authStore";
 
 const AppContainer = () => {
 
@@ -23,15 +24,16 @@ const AppContainer = () => {
   f7ready(() => {
     // Call F7 APIs here
   });
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
 
   return (
     <QueryClientProvider>
-    <App {...f7params}>
+    <App {...f7params} className="bg-zinc-400">
   <MenuPanel />
 
-  <Views tabs className="safe-areas">
+ <Views tabs className="safe-areas">
     {/* Tabbar for switching views-tabs */}
-    <Toolbar tabbar icons bottom>
+  <Toolbar tabbar icons bottom>
       <Link 
         tabLink="#view-home" 
         tabLinkActive 

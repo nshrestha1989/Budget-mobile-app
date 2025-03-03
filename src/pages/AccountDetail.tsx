@@ -9,11 +9,11 @@ export default () => {
   const accountId = accountIdParam.accountId;
   const isNew = !accountId;
   return (
-    <PageLayout requireAuth>
+    <PageLayout requireAuth >
       <Navbar backLink="Back">
         <NavTitle>{isNew ? "New" : "Edit"} Accounts</NavTitle>
       </Navbar>
-      <AccountForm accountId={accountId}/>
+      <AccountForm accountId={accountId} />
     </PageLayout>
   );
 };
